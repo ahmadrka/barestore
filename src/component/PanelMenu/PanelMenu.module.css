@@ -1,0 +1,66 @@
+.parent {
+  width: 100%;
+}
+
+.main {
+  margin: var(--space-1) var(--space-1) 0 var(--space-1);
+  padding: var(--space-3);
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background-surface);
+  border: var(--outline-thin);
+  border-radius: var(--radius);
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  gap: var(--space-2);
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  font-size: var(--font-size-xs);
+  border: var(--outline-normal);
+  border-radius: var(--sub-radius);
+}
+.search input {
+  width: 132px;
+  padding: var(--space-1);
+}
+.search button {
+  padding: var(--space-1);
+  background-color: var(--background-hover);
+}
+
+.dropdown {
+  width: 132px;
+  padding: var(--space-1);
+  font-size: var(--font-size-sm);
+  background-color: var(--background-hover);
+  border-radius: var(--sub-radius);
+}
+.dropdown option {
+  font-size: var(--font-size-xs);
+  background-color: var(--background-hover);
+}
+
+.view {
+  display: flex;
+  flex-direction: row;
+  border: var(--outline-normal);
+  border-radius: var(--sub-radius);
+}
+.view input {
+  display: none;
+}
+.view label {
+  padding: var(--space-0);
+}
+.view input:checked + label {
+  background-color: var(--background-hover);
+}

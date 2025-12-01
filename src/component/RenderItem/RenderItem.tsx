@@ -1,0 +1,85 @@
+"use client";
+import { useEffect, useState } from "react";
+import { getProducts } from "@/lib/api/profile";
+import styles from "./RenderItem.module.css";
+import Image from "next/image";
+import Icon from "../Icon/Icon";
+import { useRouter } from "next/navigation";
+
+export default function RenderItem() {
+  const router = useRouter();
+  const [products, setProducts] = useState<Product[]>();
+
+  const openItem = (id: number) => {
+    router.push(`/products/${id}`);
+  };
+
+  const openContextMenu = (id: number) => {
+    console.log(`Context menu for ${id}`);
+  };
+
+  const fetchData = async () => {
+    try {
+      const data = await getProducts();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <div className={styles.parent}>
+      <div className={styles.info}>
+        <span>Name</span>
+        <span>Last Updated</span>
+      </div>
+      <ul className={styles.itemList}>
+        {products?.map((data) => (
+          <li
+            className={styles.item}
+            key={data.id}
+            onDoubleClick={() => openItem(data.id)}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              openContextMenu(data.id);
+            }}
+          >
+            <div className={styles.itemTitle}>
+              <Image
+                src={data.images[0]}
+                width={32}
+                height={32}
+                alt="Thumbnail"
+                unoptimized
+              />
+              <h3>{data.title}</h3>
+            </div>
+            <div className={styles.itemDescription}>
+              <span>29/11/2025</span>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  openContextMenu(data.id);
+                }}
+                onDoubleClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                }}
+                onContextMenu={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                }}
+              >
+                <Icon name="dots" width={20} />
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

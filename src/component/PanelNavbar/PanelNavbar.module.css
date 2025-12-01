@@ -1,0 +1,90 @@
+/* Local Variable */
+:root {
+  --navbar-open: 250px;
+  --navbar-close: 64px;
+}
+
+/* Parent Style */
+.parent {
+  width: 100%;
+  max-width: var(--navbar-close);
+  height: 100dvh;
+  padding: var(--space-3);
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: start;
+  background-color: var(--background-surface);
+  border-right: var(--outline-thin);
+  transition: max-width var(--transition-normal);
+  overflow: hidden;
+}
+
+.parentActive {
+  max-width: var(--navbar-open);
+}
+
+/* List Style */
+.list {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-1);
+}
+
+.list li,
+.list li a {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+}
+
+/* Button Style */
+.icon {
+  background-color: #00000000;
+  transition: background-color var(--transition-normal);
+  border-radius: var(--radius);
+}
+.icon:hover,
+a:hover .icon {
+  background-color: var(--background-hover);
+}
+
+.icon svg,
+.iconActive svg {
+  margin: var(--space-1);
+  width: var(--space-8);
+  height: var(--space-8);
+}
+
+.iconActive {
+  background-color: var(--background-hover);
+  border-radius: var(--radius);
+}
+
+/* Custom Style */
+.logo {
+  margin-bottom: var(--space-1);
+  padding-bottom: var(--space-4);
+  font-family: var(--font-outfit);
+  font-size: var(--font-size-2xl) !important;
+  font-weight: bold !important;
+  border-bottom: var(--outline-normal);
+}
+
+.profilePic {
+  aspect-ratio: 1/1;
+  margin: var(--space-1);
+  border-radius: var(--full-radius);
+  background-color: var(--background-hover);
+  overflow: hidden;
+}
+
+.profilePic svg {
+  margin: 0;
+  padding: var(--space-1);
+}
