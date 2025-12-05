@@ -1,0 +1,94 @@
+[
+  {
+    "id": 1,
+    "title": "Classic Heather Gray Hoodie",
+    "price": 69,
+    "categoryId": 1,
+    "type": {
+      "weightType": "absolute"
+    },
+    "variantOptions": [
+      { "name": "size", "value": ["S", "M", "L", "XL"] },
+      { "name": "color", "value": ["Heather Gray", "Black", "White"] }
+    ],
+    "variantCombinations": [
+      {
+        "id": 1,
+        "options": { "size": "S", "color": "Heather Gray" },
+        "price": 69,
+        "weight": 500
+      },
+      {
+        "id": 2,
+        "options": { "size": "S", "color": "Black" },
+        "price": 69,
+        "weight": 500
+      },
+      {
+        "id": 3,
+        "options": { "size": "S", "color": "White" },
+        "price": 69,
+        "weight": 500
+      },
+
+      {
+        "id": 4,
+        "options": { "size": "M", "color": "Heather Gray" },
+        "price": 74,
+        "weight": 550
+      }
+    ],
+    "description": "Stay cozy and stylish with our Classic Heather Gray Hoodie. Crafted from soft, durable fabric, it features a kangaroo pocket, adjustable drawstring hood, and ribbed cuffs. Perfect for a casual day out or a relaxing evening in, this hoodie is a versatile addition to any wardrobe.",
+    "images": [
+      "https://i.imgur.com/cHddUCu.jpeg",
+      "https://i.imgur.com/CFOjAgK.jpeg",
+      "https://i.imgur.com/wbIMMme.jpeg"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Classic Comfort Fit Joggers",
+    "price": 25,
+    "categoryId": 1,
+    "type": {
+      "weightType": "absolute"
+    },
+    "variantOptions": [
+      { "name": "size", "value": ["S", "M", "L", "XL"] },
+      { "name": "color", "value": ["Heather Gray", "Black", "White"] }
+    ],
+    "variantCombinations": [
+      {
+        "id": 1,
+        "options": { "size": "S", "color": "Heather Gray" },
+        "price": 69,
+        "weight": 500
+      },
+      {
+        "id": 2,
+        "options": { "size": "S", "color": "Black" },
+        "price": 69,
+        "weight": 500
+      },
+      {
+        "id": 3,
+        "options": { "size": "S", "color": "White" },
+        "price": 69,
+        "weight": 500
+      },
+
+      {
+        "id": 4,
+        "options": { "size": "M", "color": "Heather Gray" },
+        "price": 74,
+        "weight": 550
+      }
+    ],
+    "description": "Discover the perfect blend of style and comfort with our Classic Comfort Fit Joggers. These versatile black joggers feature a soft elastic waistband with an adjustable drawstring, two side pockets, and ribbed ankle cuffs for a secure fit. Made from a lightweight and durable fabric, they are ideal for both active days and relaxed lounging.",
+    "images": [
+      "https://i.imgur.com/ZKGofuB.jpeg",
+      "https://i.imgur.com/GJi73H0.jpeg",
+      "https://i.imgur.com/633Fqrz.jpeg"
+    ]
+  }
+]
