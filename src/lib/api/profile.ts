@@ -28,7 +28,7 @@ export async function getUser(id: number): Promise<UserProfile> {
   }
 }
 
-export async function getStore(id: number): Promise<StoreProfile> {
+export async function getStoreProfile(id?: number): Promise<StoreProfile> {
   try {
     const response = await fetch("/dummy/storeProfile.json");
     if (!response.ok) {
