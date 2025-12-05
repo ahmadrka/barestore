@@ -1,0 +1,29 @@
+.parent {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  padding: var(--space-6);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-base);
+  border: var(--outline-thin);
+  border-bottom: var(--outline-thick);
+  border-radius: var(--radius);
+}
+
+.main h1 {
+  font-size: 92px;
+  line-height: 90px;
+}
+
+.main h2 {
+  font-size: var(--font-size-2xl);
+}

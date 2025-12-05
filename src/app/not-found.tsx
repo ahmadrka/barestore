@@ -1,9 +1,16 @@
-import React from 'react'
+import styles from "@/style/NotFound.module.css";
 
-function notFound() {
+export default function notFound() {
   return (
-    <div>Page Not Found<br />404</div>
-  )
+    <div className={styles.parent}>
+      <main className={styles.main}>
+        <h1>404</h1>
+        <h2>Page Not Found</h2>
+        {/* <p>
+          Sorry, page you looking for is not available or broken. Please try
+          again later.
+        </p> */}
+      </main>
+    </div>
+  );
 }
-
-export default notFound
