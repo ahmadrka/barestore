@@ -1,5 +1,6 @@
 "use client";
 import PanelNavbar from "@/component/PanelNavbar/PanelNavbar";
+import Icon from "@/component/Icon/Icon";
 import styles from "./styles.module.css";
 import { useEffect, useState } from "react";
 import { getUser } from "@/lib/api/profile";
@@ -69,19 +70,35 @@ export default function dashboard() {
         <div className={styles.mainChild}>
           <section className={`${styles.section} ${styles.header}`}>
             <div className={styles.status}>
-              <span className={styles.clock}>
-                <span>{time}</span>
-              </span>
-              <span className={styles.date}>{date}</span>
+              <time className={styles.clock}>{time || "00:00"}</time>
+              <span className={styles.date}>{date || "1 Jan 1970"}</span>
             </div>
             <div className={styles.greeting}>
-              <span>Hi, {userData?.name}</span>
-              <h1>{greeting}</h1>
+              <span>Hi, {userData?.name || "There"} 👋</span>
+              <h1>{greeting || "Good Day"}</h1>
             </div>
           </section>
-          <section className={styles.section}>Store Status</section>
-          <section className={styles.section}>Staff Online</section>
-          <section className={styles.section}>Working Hour</section>
+          <section className={styles.section}>
+            <Icon name="store" width={64} />
+            <div className={styles.description}>
+              <h2>1,234 Today</h2>
+              <h3>BareStore Demo</h3>
+            </div>
+          </section>
+          <section className={styles.section}>
+            <Icon name="person" width={64} />
+            <div className={styles.description}>
+              <h2>Active Staff</h2>
+              <h3>1/20 Online</h3>
+            </div>
+          </section>
+          <section className={styles.section}>
+            <Icon name="clockCheck" width={64} />
+            <div className={styles.description}>
+              <h2>Working Hour</h2>
+              <h3>6:00 - 17:00</h3>
+            </div>
+          </section>
           <section className={styles.section}>Selling Per Hour</section>
           <section className={styles.section}>Selling Per Day</section>
           <section className={styles.section}>Selling Per Week</section>

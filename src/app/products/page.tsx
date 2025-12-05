@@ -2,6 +2,8 @@ import PanelNavbar from "@/component/PanelNavbar/PanelNavbar";
 import PanelMenu from "@/component/PanelMenu/PanelMenu";
 import RenderItem from "@/component/RenderItem/RenderItem";
 import styles from "./styles.module.css";
+import Icon from "@/component/Icon/Icon";
+import Link from "next/link";
 
 export default function products() {
   const panelMenuProps = {
@@ -29,6 +31,11 @@ export default function products() {
       <main className={styles.main}>
         <PanelMenu data={panelMenuProps} />
         <RenderItem />
+        <Link href="/products/create">
+          <button className={styles.addButton}>
+            <Icon name="plus" width={32} />
+          </button>
+        </Link>
       </main>
     </div>
   );
