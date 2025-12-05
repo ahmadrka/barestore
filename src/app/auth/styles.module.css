@@ -15,55 +15,51 @@
   justify-content: center;
   align-items: center;
   background-color: var(--background-surface);
-  border: var(--outline-normal);
+  border: var(--outline-thin);
   border-radius: var(--radius);
 }
 
-.auth {
-  width: 320px;
-  height: max-content;
-  padding: var(--space-3);
-  text-align: center;
-}
-.auth h1 {
-  font-size: var(--font-size-lg);
-}
-.auth a {
-  font-size: var(--font-size-sm);
+.main a {
+  padding: var(--space-1);
+  font-size: var(--font-size-xs);
 }
 
-.authActive {
-  width: 100%;
-  padding: var(--space-3);
+.auth {
+  padding: var(--space-6);
+  width: 320px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: var(--space-6);
+  text-align: center;
   background-color: var(--background-base);
   border-radius: var(--radius);
+}
+.auth h1 {
+  font-size: var(--font-size-3xl);
 }
 
 .form {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--space-4);
   width: 100%;
 }
 
 .form label {
   width: 100%;
-  /* padding: var(--space-1); */
   display: flex;
   flex-direction: column;
   text-align: left;
-  color: var(--color-primary);
-  border: var(--outline-thin);
+  outline: var(--outline-thin);
   border-radius: var(--sub-radius);
+  box-sizing: border-box;
 }
 .form label:focus-within {
-  border: var(--outline-normal);
+  outline: var(--outline-normal);
 }
 
 .form label span {
@@ -71,6 +67,7 @@
   margin: var(--space-3);
   font-size: var(--font-size-md);
   font-weight: normal;
+  color: var(--color-secondary);
   transition: font-size 0.1s, transform 0.1s;
 }
 
@@ -85,13 +82,29 @@
 .form label input:not(:placeholder-shown) + span,
 .form label textarea:not(:placeholder-shown) + span {
   font-size: var(--font-size-xs);
+  font-weight: 600;
   background-color: var(--background-base);
   transform: translateY(-17px);
 }
 
 /* Form Validation With CSS */
 .form label:has(input:user-invalid) {
-  border: 0.1rem solid var(--color-error);
+  outline: 1px solid var(--color-error);
+}
+.form label:has(input:user-invalid):focus-within {
+  color: var(--color-error);
+  outline: 2px solid var(--color-error);
+}
+.error {
+  padding: var(--space-0);
+  width: 100%;
+  color: var(--color-error);
+  background-color: var(--background-error);
+  border: 1px solid var(--color-error);
+  border-radius: var(--sub-radius);
+}
+.formError {
+  outline: 1px solid var(--color-error);
 }
 
 .form button {
@@ -99,7 +112,7 @@
   padding: var(--space-2);
   font-size: var(--font-size-md);
   font-weight: 600;
-  color: var(--color-foreground);
+  color: var(--color-primary);
   background-color: var(--background-surface);
   border: var(--outline-thin);
   border-radius: var(--sub-radius);
@@ -129,10 +142,12 @@
   margin: var(--space-1);
 }
 
-.borderTop {
-  border-top: var(--outline-normal);
+.border {
+  border-bottom: var(--outline-thick);
 }
-
+.borderTop {
+  border-top: var(--outline-thin);
+}
 .borderBottom {
-  border-bottom: var(--outline-normal);
+  border-bottom: var(--outline-thin);
 }
