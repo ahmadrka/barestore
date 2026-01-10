@@ -1,111 +1,15 @@
 "use client";
 import PanelNavbar from "@/component/PanelNavbar/PanelNavbar";
-import Icon from "@/component/Icon/Icon";
 import styles from "./styles.module.css";
-import { useEffect, useState } from "react";
-import { getUser } from "@/lib/api/profile";
+import Image from "next/image";
+import MainHeader from "@/component/MainHeader/MainHeader";
 
-export default function dashboard() {
-  const [userData, setUserData] = useState<UserProfile | null>();
-  const [time, setTime] = useState("");
-  const [date, setDate] = useState("");
-  const [greeting, setGreeting] = useState("");
-
-  const updateClock = () => {
-    let clock = new Date().toLocaleTimeString(undefined, {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    clock = clock.replace(".", ":");
-
-    const newDate = new Date().toLocaleDateString(undefined, {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-
-    setDate((prev) => {
-      if (prev !== newDate) {
-        return newDate;
-      }
-      return prev;
-    });
-
-    setTime(clock);
-
-    const hour = new Date().getHours();
-    let greet = "";
-
-    if (hour >= 5 && hour < 12) greet = "Good Morning";
-    else if (hour >= 12 && hour < 17) greet = "Good Afternoon";
-    else if (hour >= 17 && hour < 20) greet = "Good Evening";
-    else greet = "Good Night";
-
-    setGreeting(greet);
-  };
-
-  const fetchData = async () => {
-    try {
-      const data = await getUser(1);
-      setUserData(data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
-
-  useEffect(() => {
-    updateClock();
-    const interval = setInterval(updateClock, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+export default function Dashboard() {
   return (
     <div className={styles.parent}>
       <PanelNavbar status="dashboard" />
       <main className={styles.main}>
-        <div className={styles.mainChild}>
-          <section className={`${styles.section} ${styles.header}`}>
-            <div className={styles.status}>
-              <time className={styles.clock}>{time || "00:00"}</time>
-              <span className={styles.date}>{date || "1 Jan 1970"}</span>
-            </div>
-            <div className={styles.greeting}>
-              <span>Hi, {userData?.name || "There"} 👋</span>
-              <h1>{greeting || "Good Day"}</h1>
-            </div>
-          </section>
-          <section className={styles.section}>
-            <Icon name="store" width={64} />
-            <div className={styles.description}>
-              <h2>1,234 Today</h2>
-              <h3>BareStore Demo</h3>
-            </div>
-          </section>
-          <section className={styles.section}>
-            <Icon name="person" width={64} />
-            <div className={styles.description}>
-              <h2>Active Staff</h2>
-              <h3>1/20 Online</h3>
-            </div>
-          </section>
-          <section className={styles.section}>
-            <Icon name="clockCheck" width={64} />
-            <div className={styles.description}>
-              <h2>Working Hour</h2>
-              <h3>6:00 - 17:00</h3>
-            </div>
-          </section>
-          <section className={styles.section}>Selling Per Hour</section>
-          <section className={styles.section}>Selling Per Day</section>
-          <section className={styles.section}>Selling Per Week</section>
-          <section className={styles.section}>Stock In</section>
-          <section className={styles.section}>Stock Total</section>
-          <section className={styles.section}>Out Of Stock</section>
-        </div>
+        <MainHeader title="Dashboard" />
       </main>
     </div>
   );

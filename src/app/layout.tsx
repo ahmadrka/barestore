@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import ToggleProvider from "@/context/ToggleProvider/ToggleProvider";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
 const InterFont = Inter({
@@ -12,7 +13,6 @@ const OutfitFont = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
 });
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,9 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${InterFont.variable} ${OutfitFont.variable}`}>
-        <ToggleProvider>
-          {children}
-        </ToggleProvider>
+        <NextTopLoader showSpinner={false} color="var(--blue-500)" />
+        <ToggleProvider>{children}</ToggleProvider>
       </body>
     </html>
   );

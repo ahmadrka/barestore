@@ -2,8 +2,17 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "../styles.module.css";
+import button from "@/component/Styles/Button.module.css";
+import form from "@/component/Styles/Form.module.css";
 import Link from "next/link";
 import useValidateEmail from "@/hook/useValidateEmail";
+import { handleLogin } from "@/lib/api/auth";
+import {
+  handleFacebookOAuth,
+  handleGoogleOAuth,
+  handleMicrosoftOAuth,
+} from "@/lib/api/oauth";
+import Icon from "@/component/Icon/Icon";
 
 export default function Login() {
   const router = useRouter();
@@ -12,34 +21,29 @@ export default function Login() {
   const [error, setError] = useState("");
   const [login, setLogin] = useState({ email: "", password: "" });
 
-  const dummyUser = {
-    email: "test@mail.com",
-    password: "admin123",
-    twoFA: false,
-  };
-
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    email: string,
+    password: string,
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
-    if (!useValidateEmail(login.email) || login.email !== dummyUser.email) {
-      // Dummy email check
-      setError("Email not found");
-      return;
-    } else if (login.password !== dummyUser.password) {
-      // Dummy password check
-      setError("Incorrect password");
+    if (!useValidateEmail(login.email)) {
+      setError("Invalid email");
       return;
     }
 
-    setError("");
+    const loginData = await handleLogin(email, password);
 
-    if (dummyUser.twoFA) {
-      // Redirect to 2FA verification page
-      router.push("/auth/verify");
+    if (loginData.errorCode === "USER_NOT_FOUND") {
+      setError("User not found");
       return;
     }
 
-    // GET ACCESS & REFRESH TOKEN AND SAVE TO COOKIES
+    if (loginData.errorCode === "INVALID_PASSWORD") {
+      setError("Invalid password");
+      return;
+    }
 
     if (redirect) {
       router.push(redirect);
@@ -52,11 +56,14 @@ export default function Login() {
     <div className={styles.parent}>
       <main className={styles.main}>
         <div className={`${styles.auth} ${styles.borderBottom}`}>
-          <h1>Log In</h1>
+          <div className={styles.title}>
+            <h1>Login</h1>
+            <p>login for continue</p>
+          </div>
           <form
-            onSubmit={(e) => handleLogin(e)}
+            onSubmit={(e) => handleSubmit(login.email, login.password, e)}
             onInvalid={() => setError("Please input email and password")}
-            className={styles.form}
+            className={form.form}
           >
             <label htmlFor="email">
               <input
@@ -87,32 +94,58 @@ export default function Login() {
               />
               <span>Password</span>
             </label>
-            <button type="submit">{`Start ->`}</button>
-            {error && <p className={styles.error}>{error}</p>}
+            <button type="submit" className={button.primary}>
+              {`Start ->`}
+            </button>
+            {error && <p className={form.error}>{error}</p>}
           </form>
-          <p>or log in with</p>
+          <div className={styles.authSpan}>
+            <span>or login with</span>
+            <div></div>
+          </div>
           <div className={styles.oauthButtons}>
-            <button title="Google">
-              <img
-                src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
-                alt="Google"
-              />
+            <button
+              title="Google"
+              onClick={() => handleGoogleOAuth(redirect)}
+              className={button.secondary}
+              style={
+                process.env.NEXT_PUBLIC_GOOGLE_OAUTH === "true"
+                  ? {}
+                  : { display: "none" }
+              }
+            >
+              <Icon name="google" width={24} height={24} />
+              <span>Google</span>
             </button>
-            <button title="Microsoft">
-              <img
-                src="https://msftstories.thesourcemediaassets.com/2022/05/Microsoft-logo_rgb_c-wht-181x94.png"
-                alt="Microsoft"
-              />
+            <button
+              title="Microsoft"
+              onClick={() => handleMicrosoftOAuth(redirect)}
+              className={button.secondary}
+              style={
+                process.env.NEXT_PUBLIC_MICROSOFT_OAUTH === "true"
+                  ? {}
+                  : { display: "none" }
+              }
+            >
+              <Icon name="microsoft" width={24} height={24} />
+              <span>Microsoft</span>
             </button>
-            <button title="Apple">
-              <img
-                src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wgARCALUAtgDASIAAhEBAxEB/8QAHAAAAwEAAwEBAAAAAAAAAAAAAAQFAwECBgcI/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEAMQAAAB+qZr9SWzp2KaXOZNo56FGUziT7SWw/CoriPopTIxBqYGdmZucSqWRpRnaiyVDoOsIdydk9wVc1+pLZ07FNLnMm0c9CjKZxJ9pLYfhUVxH0UpkYg1MDOzM3OJVLI0oztRZKh0HWEO5Oye4Kua/Uls6dimlzmTaOehRlM4k+0lsPwqK4j6KUyMQamBnZmbnEqlkaUZ2oslQ6DrCHcnZPcFUTCVo4FFdfgnuaBRnc8E+pmFGMzwT7qQUfPUeBO7O5GI1AM6s7k4n0A0dnciy9AHdJ3JO0cCiuvwT3NAozueCfUzCjGZ4J91IKPnqPAndncjEagGdWdycT6AaOzuRZegDuk7knaOBRXX4J7mgUZ3PBPqZhRjM8E+6kFHz1HgTuzuRiNQDOrO5OJ9ANHZ3IsvQB3SdyTigFHOdyIsu9B9NbuT6OuRRlGpNtZ4FOExuS/RJrFGC8wJWUMRmTQ2MqM7MEqWhoxM6i+VTsOZzuRFl3oPprdyfR1yKMo1JtrPApwmNyX6JNYowXmBKyhiMyaGxlRnZglS0NGJnUXyqdhzOdyIsu9B9NbuT6OuRRlGpNtZ4FOExuS/RJrFGC8wJWUMRmTQ2MqM7MEqWhoxM6i+VTsOEoEtavUaXnaCTruA/OXYJ1bRQpxhwlXs0Cv51miSrqqBRiuuiVVBUYnUWTNyZiC1XU00kdRbWr1Gl52gk67gPzl2CdW0UKcYcJV7NAr+dZokq6qgUY"
-                alt="Apple"
-              />
+            <button
+              title="Facebook"
+              onClick={() => handleFacebookOAuth(redirect)}
+              className={button.secondary}
+              style={
+                process.env.NEXT_PUBLIC_FACEBOOK_OAUTH === "true"
+                  ? {}
+                  : { display: "none" }
+              }
+            >
+              <Icon name="facebook" width={24} height={24} />
+              <span>Facebook</span>
             </button>
           </div>
         </div>
-        <Link href="signup">
+        <Link href="signup" className={styles.button}>
           don't have an account? <u>click here</u>
         </Link>
       </main>

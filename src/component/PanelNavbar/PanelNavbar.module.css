@@ -68,12 +68,12 @@ a:hover .icon {
 
 /* Custom Style */
 .logo {
-  margin-bottom: var(--space-1);
-  padding-bottom: var(--space-4);
+  /* margin-bottom: var(--space-1);
+  padding-bottom: var(--space-4); */
   font-family: var(--font-outfit);
   font-size: var(--font-size-2xl) !important;
   font-weight: bold !important;
-  border-bottom: var(--outline-normal);
+  /* border-bottom: var(--outline-normal); */
 }
 
 .profilePic {
@@ -82,6 +82,9 @@ a:hover .icon {
   border-radius: var(--full-radius);
   background-color: var(--background-hover);
   overflow: hidden;
+}
+.profilePic:hover + svg {
+  cursor: pointer;
 }
 
 .profilePic svg {

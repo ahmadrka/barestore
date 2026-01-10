@@ -2,7 +2,11 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "../../styles.module.css";
+import button from "@/component/Styles/Button.module.css";
+import form from "@/component/Styles/Form.module.css";
 import Loading from "@/app/loading";
+import { handleSignupVerify } from "@/lib/api/auth";
+import { getCookie } from "@/lib/helper/cookies";
 
 export default function Verify() {
   const router = useRouter();
@@ -10,18 +14,28 @@ export default function Verify() {
   const token = searchParams.get("token") || "";
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [verificationInterval, setVerificationInterval] = useState(30);
+  const [verificationInterval, setVerificationInterval] = useState(60);
 
   const sendVerificationEmail = () => {
-    setVerificationInterval(30);
+    setVerificationInterval(60);
   };
 
-  const verifyToken = (token: string) => {
-    // Simulate an API call to verify the token
-    if (token === "valid-token") {
+  const verifyToken = async (token: string) => {
+    const verifyData = await handleSignupVerify(token);
+
+    if (verifyData.errorCode === "INVALID_TOKEN") {
+      setError("Token invalid or expired");
+      return;
+    }
+
+    if (verifyData.errorCode === "TOO_MANY_REQUESTS") {
+      setError("Too many requests");
+      return;
+    }
+    if (verifyData.success) {
       router.replace("/auth/signup/password");
     } else {
-      setError("Invalid or expired verification link.");
+      setError("Failed to verify token");
     }
   };
 
@@ -42,8 +56,19 @@ export default function Verify() {
     if (token) {
       verifyToken(token);
     }
-    setLoading(false);
   }, [token]);
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const tokenCookie = await getCookie("verifyToken");
+      const hasTokenParam = searchParams.has("token");
+      if (!hasTokenParam && !tokenCookie) {
+        router.push("/auth/login");
+      }
+    };
+    checkToken();
+    setLoading(false);
+  }, []);
 
   if (loading) return Loading();
 
@@ -52,15 +77,19 @@ export default function Verify() {
       <div className={styles.parent}>
         <main className={styles.main}>
           <div className={`${styles.auth} ${styles.border}`}>
+            <div className={styles.title}>
+              <h1>Verification</h1>
+              <p>please re-verify your email to continue</p>
+            </div>
             <form
-              className={styles.form}
+              className={form.form}
               onSubmit={(e) => {
                 e.preventDefault();
-                router.push("/auth");
+                router.push("/auth/signup");
               }}
             >
-              <p className={styles.error}>{error}</p>
-              <button>{`<-`} Back</button>
+              <p className={form.error}>{error}</p>
+              <button className={button.primary}>{`<-`} Back</button>
             </form>
           </div>
         </main>
@@ -72,18 +101,29 @@ export default function Verify() {
     <div className={styles.parent}>
       <main className={styles.main}>
         <div className={`${styles.auth} ${styles.border}`}>
-          <h1>Verification</h1>
-          <form className={styles.form}>
+          <div className={styles.title}>
+            <h1>Verification</h1>
+            <p>please verify your email to continue</p>
+          </div>
+          <form className={form.form}>
             <p>A verification link has been sent to your email.</p>
             <p>
               Please check your inbox and click the link to verify your account.
             </p>
             {verificationInterval > 0 ? (
-              <button type="button" className="disabled" disabled>
+              <button
+                type="button"
+                className={`${button.disabled} ${button.primary}`}
+                disabled
+              >
                 Resend In {verificationInterval}s
               </button>
             ) : (
-              <button type="button" onClick={() => sendVerificationEmail()}>
+              <button
+                type="button"
+                className={button.primary}
+                onClick={() => sendVerificationEmail()}
+              >
                 Resend Verification Email
               </button>
             )}

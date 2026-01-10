@@ -15,107 +15,79 @@
   justify-content: center;
   align-items: center;
   background-color: var(--background-surface);
-  border: var(--outline-thin);
+  border: var(--outline-middle);
+  border-top: var(--outline-top);
   border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
 }
 
-.main a {
+.main .button {
+  width: 100%;
   padding: var(--space-1);
   font-size: var(--font-size-xs);
+  text-align: center;
 }
 
 .auth {
   padding: var(--space-6);
-  width: 320px;
+  width: 90dvw;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--space-6);
+  gap: var(--space-7);
   text-align: center;
   background-color: var(--background-base);
   border-radius: var(--radius);
 }
-.auth h1 {
-  font-size: var(--font-size-3xl);
-}
-
-.form {
-  width: 100%;
+.auth .title {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-4);
-  width: 100%;
+  gap: var(--space-1);
 }
-
-.form label {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  outline: var(--outline-thin);
-  border-radius: var(--sub-radius);
-  box-sizing: border-box;
+.auth .title h1 {
+  font-size: var(--font-size-3xl);
 }
-.form label:focus-within {
-  outline: var(--outline-normal);
-}
-
-.form label span {
-  position: absolute;
-  margin: var(--space-3);
-  font-size: var(--font-size-md);
-  font-weight: normal;
+.auth .title p {
+  font-size: var(--font-size-xl);
+  font-weight: 400;
   color: var(--color-secondary);
-  transition: font-size 0.1s, transform 0.1s;
 }
-
-.form input {
-  padding: var(--space-3);
-  font-size: var(--font-size-md);
-  font-weight: normal;
+.auth .authSpan {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
 }
-
-/* Form onFocus */
-.form label:focus-within span,
-.form label input:not(:placeholder-shown) + span,
-.form label textarea:not(:placeholder-shown) + span {
-  font-size: var(--font-size-xs);
-  font-weight: 600;
+.auth .authSpan span {
+  z-index: 1;
+  padding: 0 var(--space-4);
   background-color: var(--background-base);
-  transform: translateY(-17px);
+}
+.auth .authSpan div {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  border-bottom: var(--outline-normal);
 }
 
-/* Form Validation With CSS */
-.form label:has(input:user-invalid) {
-  outline: 1px solid var(--color-error);
-}
-.form label:has(input:user-invalid):focus-within {
-  color: var(--color-error);
-  outline: 2px solid var(--color-error);
-}
-.error {
-  padding: var(--space-0);
-  width: 100%;
-  color: var(--color-error);
-  background-color: var(--background-error);
-  border: 1px solid var(--color-error);
-  border-radius: var(--sub-radius);
-}
-.formError {
-  outline: 1px solid var(--color-error);
-}
-
-.form button {
-  width: 100%;
-  padding: var(--space-2);
-  font-size: var(--font-size-md);
-  font-weight: 600;
-  color: var(--color-primary);
-  background-color: var(--background-surface);
-  border: var(--outline-thin);
-  border-radius: var(--sub-radius);
+@media (max-width: 512px) {
+  .main {
+    height: 100dvh;
+  }
+  .main .button {
+    padding: var(--space-5);
+  }
+  .auth {
+    width: 100dvw;
+    height: 100%;
+    gap: var(--space-9);
+  }
 }
 
 .oauthButtons {
@@ -131,23 +103,55 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--color-foreground);
-  background-color: var(--background-surface);
-  border: var(--outline-thin);
-  border-radius: var(--sub-radius);
+  gap: var(--space-2);
 }
-.oauthButtons button img {
-  width: 24px;
-  height: 24px;
-  margin: var(--space-1);
+
+@media (max-width: 512px) {
+  .oauthButtons button {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (max-width: 412px) {
+  .oauthButtons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+  .oauthButtons button {
+    width: 100%;
+    display: flex;
+    flex: 1 1;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .oauthButtons span {
+    display: none;
+  }
+}
+.oauthButtons button img,
+.oauthButtons button svg {
+  width: 20px;
+  height: 20px;
+}
+.oauthButtons button span {
+  flex: 1;
+  font-size: var(--font-size-md);
+  color: var(--color-primary);
 }
 
 .border {
-  border-bottom: var(--outline-thick);
+  border-bottom: var(--outline-bottom);
 }
 .borderTop {
-  border-top: var(--outline-thin);
+  border-top: var(--outline-middle);
 }
 .borderBottom {
-  border-bottom: var(--outline-thin);
+  border-bottom: var(--outline-middle);
 }

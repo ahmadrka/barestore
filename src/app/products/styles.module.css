@@ -19,8 +19,10 @@
   padding: var(--space-2);
   background-color: var(--background-surface);
   border-radius: var(--radius);
-  border: var(--outline-thin);
-  border-bottom: var(--outline-thick);
+  border: var(--outline-middle);
+  border-top: var(--outline-top);
+  border-bottom: var(--outline-bottom);
+  box-shadow: var(--box-shadow);
   transition: background-color var(--transition-normal);
 }
 .addButton svg {

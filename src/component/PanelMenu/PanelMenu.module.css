@@ -3,15 +3,18 @@
 }
 
 .main {
-  margin: var(--space-1) var(--space-1) 0 var(--space-1);
+  margin: var(--space-0) var(--space-0) 0 var(--space-0);
   padding: var(--space-3);
   display: flex;
   flex-flow: row;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--background-surface);
-  border: var(--outline-thin);
+  background-color: var(--background-base);
+  border: var(--outline-middle);
+  border-top: var(--outline-top);
+  border-bottom: var(--outline-bottom);
   border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
 }
 
 .menu {
@@ -25,11 +28,12 @@
   display: flex;
   flex-direction: row;
   font-size: var(--font-size-xs);
-  border: var(--outline-normal);
+  background-color: var(--background-surface);
   border-radius: var(--sub-radius);
 }
 .search input {
   width: 132px;
+  height: 100%;
   padding: var(--space-1);
 }
 .search button {

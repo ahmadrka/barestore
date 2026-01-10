@@ -14,9 +14,11 @@
   justify-content: center;
   align-items: center;
   background-color: var(--background-base);
-  border: var(--outline-thin);
-  border-bottom: var(--outline-thick);
+  border: var(--outline-middle);
+  border-top: var(--outline-top);
+  border-bottom: var(--outline-bottom);
   border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
 }
 
 .main h1 {

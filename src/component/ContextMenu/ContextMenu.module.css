@@ -8,6 +8,7 @@
   flex-direction: column;
   gap: var(--space-1);
   background-color: var(--background-base);
-  border: var(--outline-thin);
+  border: var(--outline-middle);
+  border-top: var(--outline-top);
   border-radius: var(--radius);
 }

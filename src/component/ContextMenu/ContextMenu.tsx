@@ -1,66 +1,88 @@
 "use client";
 
-import { useState, useEffect, ReactNode, useRef } from "react";
-import Icon from "../Icon/Icon";
+import { createContext, useContext, useState, useRef, ReactNode } from "react";
 import styles from "./ContextMenu.module.css";
 
-type ContextMenuProps = {
-  children?: ReactNode;
-  type?: "click" | "dobleClick";
-  items: {
-    id: number;
-    icon: string;
-    title: string;
-    action: ReactNode;
-  }[];
+type ContextMenuContextType = {
+  open: boolean;
+  setOpen: (v: boolean) => void;
+  setPosition: (pos: { x: number; y: number }) => void;
+  position: { x: number; y: number };
 };
 
-export default function ContextMenu({
-  type,
-  children,
-  items,
-}: ContextMenuProps) {
-  const ref = useRef<HTMLDivElement>(null);
+const ContextMenuContext = createContext<ContextMenuContextType | null>(null);
+
+function ContextMenuRoot({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
+  return (
+    <ContextMenuContext.Provider
+      value={{ open, setOpen, position, setPosition }}
+    >
+      {children}
+    </ContextMenuContext.Provider>
+  );
+}
 
-    window.addEventListener("click", handleClick);
-    return () => window.removeEventListener("click", handleClick);
-  }, []);
+const useMenu = () => {
+  const ctx = useContext(ContextMenuContext);
+  if (!ctx)
+    throw new Error("ContextMenu component must be inside <ContextMenu>");
+  return ctx;
+};
 
-  const openMenu = (e: React.MouseEvent) => {
-    e.preventDefault();
+function Trigger({ children }: { children: ReactNode }) {
+  const { setOpen, open, setPosition } = useMenu();
+
+  const onClick = (e: React.MouseEvent) => {
     e.stopPropagation();
 
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
 
-    setPos({ x: rect.right + 1, y: rect.top });
+    setPosition({
+      x: rect.right,
+      y: rect.bottom,
+    });
 
-    setOpen((prev) => !prev);
+    setOpen(!open);
   };
 
   return (
-    <menu className={styles.parent} ref={ref}>
-      <div onClick={openMenu}>{children}</div>
-      {open && (
-        <ul className={styles.main} style={{ top: pos.y, left: pos.x }}>
-          {items.map((data) => (
-            <li key={data.id}>
-              <button>
-                <Icon name={data.icon} width={32} />
-                {data.title}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+    <button onClick={onClick} style={{ display: "inline-block" }}>
+      {children}
+    </button>
+  );
+}
+
+function Content({ children }: { children: ReactNode }) {
+  const { open, position } = useMenu();
+
+  if (!open) return null;
+
+  return (
+    <menu
+      style={{
+        zIndex: 1000,
+        position: "fixed",
+        top: position.y,
+        left: position.x,
+        background: "white",
+        border: "1px solid #ccc",
+        padding: 8,
+      }}
+    >
+      {children}
     </menu>
   );
 }
+
+function Item({ children }: { children: ReactNode }) {
+  return <>{children}</>;
+}
+
+export const ContextMenu = Object.assign(ContextMenuRoot, {
+  Trigger,
+  Content,
+  Item,
+});

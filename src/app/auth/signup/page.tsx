@@ -1,9 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import styles from "../styles.module.css";
+import button from "@/component/Styles/Button.module.css";
+import form from "@/component/Styles/Form.module.css";
 import Link from "next/link";
 import useValidateEmail from "@/hook/useValidateEmail";
+import { handleSignup } from "@/lib/api/auth";
+import {
+  handleGoogleOAuth,
+  handleMicrosoftOAuth,
+  handleFacebookOAuth,
+} from "@/lib/api/oauth";
+import { setCookie } from "@/lib/helper/cookies";
+import Icon from "@/component/Icon/Icon";
 
 export default function Signup() {
   const router = useRouter();
@@ -13,7 +23,11 @@ export default function Signup() {
     email: "",
   });
 
-  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    name: string,
+    email: string,
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     if (signup.name.length < 3) {
@@ -24,8 +38,25 @@ export default function Signup() {
       return;
     }
 
-    setError("");
-    router.push("/auth/signup/verify");
+    const signupData = await handleSignup(name, email);
+
+    if (signupData.errorCode === "USER_ALREADY_EXISTS") {
+      setError("User already exists");
+      return;
+    }
+
+    if (signupData.errorCode === "TOO_MANY_REQUESTS") {
+      setError("Too many requests, please try again later");
+      return;
+    }
+
+    if (signupData.success) {
+      await setCookie("verifyToken", "unset", 1 * 60, {
+        httpOnly: false,
+        secure: true,
+      });
+      router.push("/auth/signup/verify");
+    }
   };
 
   useEffect(() => {
@@ -35,15 +66,18 @@ export default function Signup() {
   return (
     <div className={styles.parent}>
       <main className={styles.main}>
-        <Link href="login">
+        <Link href="login" className={styles.button}>
           already have an account? <u>click here</u>
         </Link>
         <div className={`${styles.auth} ${styles.borderTop}`}>
-          <h1>Sign Up</h1>
+          <div className={styles.title}>
+            <h1>Signup</h1>
+            <p>signup for continue</p>
+          </div>
           <form
-            onSubmit={(e) => handleSignup(e)}
+            onSubmit={(e) => handleSubmit(signup.name, signup.email, e)}
             onInvalid={() => setError("Please input name and email")}
-            className={styles.form}
+            className={form.form}
           >
             <label htmlFor="name">
               <input
@@ -71,28 +105,55 @@ export default function Signup() {
               />
               <span>Email</span>
             </label>
-            <button type="submit">{`Next ->`}</button>
-            {error && <p className={styles.error}>{error}</p>}
+            <button
+              type="submit"
+              className={button.primary}
+            >{`Next ->`}</button>
+            {error && <p className={form.error}>{error}</p>}
           </form>
-          <p>or sign up with</p>
+          <div className={styles.authSpan}>
+            <span>or signup with</span>
+            <div></div>
+          </div>
           <div className={styles.oauthButtons}>
-            <button title="Google">
-              <img
-                src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
-                alt="Google"
-              />
+            <button
+              title="Google"
+              onClick={() => handleGoogleOAuth()}
+              className={button.secondary}
+              style={
+                process.env.NEXT_PUBLIC_GOOGLE_OAUTH === "true"
+                  ? {}
+                  : { display: "none" }
+              }
+            >
+              <Icon name="google" width={24} height={24} />
+              <span>Google</span>
             </button>
-            <button title="Microsoft">
-              <img
-                src="https://msftstories.thesourcemediaassets.com/2022/05/Microsoft-logo_rgb_c-wht-181x94.png"
-                alt="Microsoft"
-              />
+            <button
+              title="Microsoft"
+              onClick={() => handleMicrosoftOAuth()}
+              className={button.secondary}
+              style={
+                process.env.NEXT_PUBLIC_MICROSOFT_OAUTH === "true"
+                  ? {}
+                  : { display: "none" }
+              }
+            >
+              <Icon name="microsoft" width={24} height={24} />
+              <span>Microsoft</span>
             </button>
-            <button title="Apple">
-              <img
-                src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wgARCALUAtgDASIAAhEBAxEB/8QAHAAAAwEAAwEBAAAAAAAAAAAAAAQFAwECBgcI/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEAMQAAAB+qZr9SWzp2KaXOZNo56FGUziT7SWw/CoriPopTIxBqYGdmZucSqWRpRnaiyVDoOsIdydk9wVc1+pLZ07FNLnMm0c9CjKZxJ9pLYfhUVxH0UpkYg1MDOzM3OJVLI0oztRZKh0HWEO5Oye4Kua/Uls6dimlzmTaOehRlM4k+0lsPwqK4j6KUyMQamBnZmbnEqlkaUZ2oslQ6DrCHcnZPcFUTCVo4FFdfgnuaBRnc8E+pmFGMzwT7qQUfPUeBO7O5GI1AM6s7k4n0A0dnciy9AHdJ3JO0cCiuvwT3NAozueCfUzCjGZ4J91IKPnqPAndncjEagGdWdycT6AaOzuRZegDuk7knaOBRXX4J7mgUZ3PBPqZhRjM8E+6kFHz1HgTuzuRiNQDOrO5OJ9ANHZ3IsvQB3SdyTigFHOdyIsu9B9NbuT6OuRRlGpNtZ4FOExuS/RJrFGC8wJWUMRmTQ2MqM7MEqWhoxM6i+VTsOZzuRFl3oPprdyfR1yKMo1JtrPApwmNyX6JNYowXmBKyhiMyaGxlRnZglS0NGJnUXyqdhzOdyIsu9B9NbuT6OuRRlGpNtZ4FOExuS/RJrFGC8wJWUMRmTQ2MqM7MEqWhoxM6i+VTsOEoEtavUaXnaCTruA/OXYJ1bRQpxhwlXs0Cv51miSrqqBRiuuiVVBUYnUWTNyZiC1XU00kdRbWr1Gl52gk67gPzl2CdW0UKcYcJV7NAr+dZokq6qgUY"
-                alt="Apple"
-              />
+            <button
+              title="Facebook"
+              onClick={() => handleFacebookOAuth()}
+              className={button.secondary}
+              style={
+                process.env.NEXT_PUBLIC_FACEBOOK_OAUTH === "true"
+                  ? {}
+                  : { display: "none" }
+              }
+            >
+              <Icon name="facebook" width={24} height={24} />
+              <span>Facebook</span>
             </button>
           </div>
         </div>

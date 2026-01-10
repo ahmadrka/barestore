@@ -2,11 +2,12 @@
 
 import { useContext, useEffect, useState } from "react";
 import { ToggleContext } from "@/context/ToggleProvider/ToggleProvider";
-import { getUser } from "@/lib/api/profile";
+import { getUser } from "@/lib/api/users";
 import styles from "./PanelNavbar.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "../Icon/Icon";
+import { UserProfile } from "@/type/users";
 
 export default function PanelNavbar({ status }: { status: string }) {
   const context = useContext(ToggleContext)!;
@@ -14,8 +15,8 @@ export default function PanelNavbar({ status }: { status: string }) {
 
   const fetchData = async () => {
     try {
-      const data = await getUser(1);
-      setUserData(data);
+      const data = await getUser();
+      if (data) setUserData(data);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -40,6 +41,8 @@ export default function PanelNavbar({ status }: { status: string }) {
           </button>
           <span>BareHouse</span>
         </li>
+      </ul>
+      <ul className={styles.list}>
         <li>
           <Link href={"/dashboard"}>
             <button
@@ -102,23 +105,6 @@ export default function PanelNavbar({ status }: { status: string }) {
               />
             </button>
             <span>Statistic</span>
-          </Link>
-        </li>
-        <li>
-          <Link href={"/configuration"}>
-            <button
-              className={
-                status == "configuration"
-                  ? `${styles.iconActive}`
-                  : `${styles.icon}`
-              }
-            >
-              <Icon
-                name={status == "configuration" ? "settingActive" : "setting"}
-                width={32}
-              />
-            </button>
-            <span>Configuration</span>
           </Link>
         </li>
       </ul>
