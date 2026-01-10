@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
+import { removeCookie } from "./lib/helper/cookies";
 
-export default function Proxy(req: NextRequest) {
+export default async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
-  const isLoggedIn = true; // Simulate Token Check
+  const refreshToken = req.cookies.get("refreshToken")?.value;
+  const token = req.cookies.get("accessToken")?.value;
+  const isAuthPage = req.nextUrl.pathname.startsWith("/auth");
+
+  if (token && isAuthPage) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
 
   const userRoutes = [
     "/home",
@@ -12,9 +19,13 @@ export default function Proxy(req: NextRequest) {
     "/staff",
     "/statistic",
   ];
-  const adminRoutes = [""];
 
-  if (userRoutes.some((route) => pathname.startsWith(route)) && !isLoggedIn) {
+  const isUserRoute = userRoutes.some((route) => pathname.startsWith(route));
+
+  if (isUserRoute && !refreshToken) {
+    await removeCookie("accessToken");
+    await removeCookie("refreshToken");
+    await removeCookie("userData");
     const url = new URL("/auth", req.url);
     url.searchParams.set("redirect", pathname);
     return NextResponse.redirect(url);
