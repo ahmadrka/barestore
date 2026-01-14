@@ -1,7 +1,5 @@
 import axios from "axios";
-import { getCookie } from "../helper/cookies";
-import { handleRefreshToken } from "./auth";
-
+import { getCookie, removeCookie } from "../helper/cookies";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const axiosInstance = axios.create({
@@ -30,10 +28,11 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
+        const { handleRefreshToken } = await import("./auth");
         const tokenData = await handleRefreshToken();
 
-        if (tokenData && tokenData.data) {
-          const newToken = tokenData.data.token.accessToken;
+        if (tokenData && tokenData.token) {
+          const newToken = tokenData.token.accessToken;
           originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
           return axiosInstance(originalRequest);
@@ -43,6 +42,9 @@ axiosInstance.interceptors.response.use(
       }
 
       if (typeof window !== "undefined") {
+        await removeCookie("accessToken");
+        await removeCookie("refreshToken");
+        await removeCookie("userData");
         window.location.href = "/auth";
       }
     }

@@ -16,7 +16,7 @@ export async function handleRefreshToken() {
     if (response.data.token || response.data.data) {
       await setCookie("accessToken", response.data.token.accessToken, 15, {
         httpOnly: false,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       });
       await setCookie(
         "refreshToken",
@@ -24,12 +24,12 @@ export async function handleRefreshToken() {
         14 * 24 * 60,
         {
           httpOnly: true,
-          secure: true,
+          secure: process.env.NODE_ENV === "production",
         }
       );
       await setCookie("userData", JSON.stringify(response.data.data), 15, {
         httpOnly: false,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       });
     }
 
@@ -53,7 +53,7 @@ export async function handleLogin(email: string, password: string) {
     if (response.data.token || response.data.data) {
       await setCookie("accessToken", response.data.token.accessToken, 15, {
         httpOnly: false,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       });
       await setCookie(
         "refreshToken",
@@ -61,12 +61,12 @@ export async function handleLogin(email: string, password: string) {
         14 * 24 * 60,
         {
           httpOnly: true,
-          secure: true,
+          secure: process.env.NODE_ENV === "production",
         }
       );
       await setCookie("userData", JSON.stringify(response.data.data), 15, {
         httpOnly: false,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       });
     }
 
@@ -105,7 +105,7 @@ export async function handleSignupVerify(token: string) {
 
     await setCookie("verifyToken", token, 60, {
       httpOnly: false,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
     });
 
     return response.data;
@@ -138,7 +138,7 @@ export async function handleSignupPassword(password: string) {
     await removeCookie("verifyToken");
     await setCookie("accessToken", response.data.token.accessToken, 15, {
       httpOnly: false,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
     });
     await setCookie(
       "refreshToken",
@@ -146,12 +146,12 @@ export async function handleSignupPassword(password: string) {
       14 * 24 * 60,
       {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       }
     );
     await setCookie("userData", JSON.stringify(response.data.data), 15, {
       httpOnly: false,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
     });
 
     return response.data;

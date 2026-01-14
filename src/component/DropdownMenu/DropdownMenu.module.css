@@ -1,0 +1,122 @@
+.parent {
+  position: relative;
+}
+
+.trigger {
+  cursor: pointer;
+}
+
+.content {
+  position: absolute;
+  z-index: 10000;
+  top: calc(100% + 5px);
+  left: 0;
+  /* margin: var(--space-2); */
+
+  /* Styling Dasar */
+  background-color: var(--background-base);
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow-section);
+
+  /* MODERATOR TRANSISI: Pisahkan properti agar tidak bentrok */
+  opacity: 0;
+  visibility: hidden;
+  scale: 0.95;
+  translate: 0 -10px; /* Nilai default: geser ke atas 10px */
+
+  transform-origin: top left;
+  transition: opacity var(--transition-fast), scale var(--transition-fast),
+    translate var(--transition-fast), visibility var(--transition-fast);
+}
+
+.contentOpen {
+  opacity: 1;
+  visibility: visible;
+  scale: 1;
+  translate: 0 0; /* Kembali ke posisi asli */
+}
+
+/* --- Penyesuaian Posisi Tanpa Merusak Transisi --- */
+
+.posTop {
+  top: auto;
+  bottom: calc(100% + 5px);
+  transform-origin: bottom left;
+  translate: 0 10px; /* Muncul dari bawah ke atas */
+}
+
+.posRight {
+  left: auto;
+  right: 0;
+  transform-origin: top right;
+}
+
+.posMiddleH {
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: top left;
+  translate: 0 -10px;
+}
+
+.posMiddleV {
+  top: 50%;
+  left: calc(100% + 5px); /* Contoh muncul di sebelah kanan trigger */
+  transform: translateY(-50%);
+  transform-origin: center left;
+  translate: -10px 0; /* Muncul dari kiri ke kanan (efek meluncur horizontal) */
+}
+
+.posMiddleV.contentOpen {
+  translate: 0 0; /* Tetap di tengah vertikal, tapi geser horizontalnya berhenti */
+}
+
+.section {
+  position: relative;
+  width: max-content;
+  padding: var(--space-1);
+}
+.section:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  right: 8px;
+  border-bottom: var(--outline-thin);
+}
+
+.item {
+  width: 100%;
+  min-width: 180px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-md) !important;
+  font-weight: 400;
+  padding: var(--space-2);
+  border-radius: var(--sub-radius);
+  transition: background-color var(--transition-fast);
+}
+.item:hover {
+  background-color: var(--background-surface);
+}
+
+/* Container Utama SubMenu */
+.subRoot {
+  list-style: none;
+  position: relative;
+  font-size: var(--font-size-md) !important;
+  font-weight: 400;
+}
+
+/* Konten yang muncul saat hover */
+.subMenuContent {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 180px;
+  background: white;
+  box-shadow: var(--box-shadow-section);
+  border-radius: var(--radius);
+  padding: 4px;
+  z-index: 10;
+}

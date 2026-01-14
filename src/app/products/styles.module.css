@@ -1,31 +1,53 @@
-.parent {
+.products {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  height: 100%;
+  min-height: 0;
+  padding: 0 var(--space-7) var(--space-7) var(--space-7);
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-7);
 }
 
-.main {
-  width: 100%;
-  /* padding-top: 100px; */
-  position: relative;
+.productsMain {
+  height: 100%;
+  min-height: 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.addButton {
-  position: fixed;
-  inset: auto var(--space-6) var(--space-6) auto;
-  padding: var(--space-2);
   background-color: var(--background-surface);
   border-radius: var(--radius);
-  border: var(--outline-middle);
-  border-top: var(--outline-top);
-  border-bottom: var(--outline-bottom);
   box-shadow: var(--box-shadow);
-  transition: background-color var(--transition-normal);
 }
-.addButton svg {
-  width: 32px;
-  height: 32px;
+
+/* .productMenu {
+  padding: var(--space-2);
+} */
+
+.itemList {
+  width: 100%;
+  padding: var(--space-2);
+  flex: 1;
+  min-height: 0;
+  border-radius: var(--radius);
+  overflow-y: auto;
+}
+
+.infoComponent h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  overflow: hidden;
+}
+.infoComponent h2 {
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  overflow: hidden;
 }

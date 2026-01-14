@@ -1,0 +1,34 @@
+.navlist {
+  width: max-content;
+  min-width: 300px;
+  padding: var(--space-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.navlist ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.navlist li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.navlist li a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-secondary);
+  font-size: var(--font-size-lg);
+  font-weight: 400;
+}
+
+.navlist li a.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}

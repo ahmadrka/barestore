@@ -6,6 +6,7 @@
 
 /* Parent Style */
 .parent {
+  min-width: var(--navbar-close);
   width: 100%;
   max-width: var(--navbar-close);
   height: 100dvh;
@@ -17,7 +18,7 @@
   background-color: var(--background-surface);
   border-right: var(--outline-thin);
   transition: max-width var(--transition-normal);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .parentActive {
@@ -33,7 +34,8 @@
 }
 
 .list li,
-.list li a {
+.list li a,
+.list li div {
   width: 100%;
   display: flex;
   flex-flow: row;
@@ -41,6 +43,13 @@
   gap: var(--space-3);
   font-size: var(--font-size-xl);
   font-weight: 600;
+}
+
+.list li span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  overflow: hidden;
 }
 
 /* Button Style */
@@ -68,26 +77,57 @@ a:hover .icon {
 
 /* Custom Style */
 .logo {
-  /* margin-bottom: var(--space-1);
-  padding-bottom: var(--space-4); */
+  margin-bottom: var(--space-1);
+  padding-bottom: var(--space-4);
   font-family: var(--font-outfit);
   font-size: var(--font-size-2xl) !important;
   font-weight: bold !important;
-  /* border-bottom: var(--outline-normal); */
+  border-bottom: var(--outline-normal);
+}
+
+.profile,
+.profile div,
+.profile span {
+  width: 100%;
+  padding: 0;
+
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.profile:hover .profilePic {
+  background-color: var(--background-hover);
 }
 
 .profilePic {
-  aspect-ratio: 1/1;
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000000;
+  transition: background-color var(--transition-normal);
+  border-radius: var(--radius);
+}
+.profilePic:hover,
+.profilePic:hover button {
+  background-color: var(--background-hover);
+}
+
+.image {
   margin: var(--space-1);
+  width: var(--space-8);
+  height: var(--space-8);
+  aspect-ratio: 1/1;
   border-radius: var(--full-radius);
   background-color: var(--background-hover);
   overflow: hidden;
-}
-.profilePic:hover + svg {
   cursor: pointer;
 }
 
-.profilePic svg {
-  margin: 0;
-  padding: var(--space-1);
+.dropdownMenuContent {
+  margin-bottom: var(--space-1);
 }

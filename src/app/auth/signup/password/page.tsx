@@ -81,7 +81,7 @@ export default function Password() {
     setLoading(false);
   }, []);
 
-  if (loading) return Loading();
+  if (loading) return <Loading />;
 
   return (
     <div className={styles.parent}>

@@ -1,59 +1,132 @@
-/* Parent Style */
-.parent {
+.dashboard {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  padding: 0 var(--space-7) var(--space-7) var(--space-7);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-7);
+  overflow-y: auto;
+}
+
+.dashboardMain {
+  min-height: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoComponent h1 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+}
+.infoComponent h2 {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+}
+
+.sectionContainer {
+  width: max-content;
+  height: max-content;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-7);
+  margin-top: auto;
+  margin-bottom: auto;
+}
+@media (max-width: 1870px) {
+  .sectionContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 1500px) {
+  .sectionContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.sectionContainer section {
+  width: 360px;
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.sectionIcon {
+  width: 100%;
+  height: max-content;
+  padding: var(--space-5);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
-
-.main {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.main .mainChild {
-  width: 100%;
-  max-width: 1234px;
-  height: max-content;
-  padding: var(--space-7);
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: var(--space-6);
-}
-
-.section {
-  padding: var(--space-10);
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: var(--space-6);
-  background-color: var(--background-base);
-  border: var(--outline-middle);
-  border-top: var(--outline-top);
-  border-bottom: var(--outline-bottom);
-  border-radius: var(--radius);
-  box-shadow: var(--box-shadow);
-  user-select: none;
-  cursor: pointer;
 }
-.section svg {
-  width: 64px;
-  height: 64px;
-}
-.section .description {
+
+.sectionDescription {
+  width: 100%;
+  padding: var(--space-5);
+  height: max-content;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: var(--space-0);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
-.section h2 {
-  font-size: var(--font-size-1xl);
-  font-weight: normal;
+.sectionDescription h1 {
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  line-height: 1;
 }
-.section h3 {
-  font-size: var(--font-size-2xl);
-  font-weight: bold;
+.sectionDescription h2 {
+  font-size: var(--font-size-4xl);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.avability {
+  color: var(--blue-900);
+  background-color: var(--blue-100);
+}
+.avability h1 {
+  color: var(--blue-500);
+}
+.avability svg {
+  color: var(--blue-900);
+}
+.activeStaff {
+  color: var(--green-900);
+  background-color: var(--green-100);
+}
+.activeStaff h1 {
+  color: var(--green-500);
+}
+.activeStaff svg {
+  color: var(--green-900);
+}
+.readyStock {
+  color: var(--yellow-900);
+  background-color: var(--yellow-100);
+}
+.readyStock h1 {
+  color: var(--yellow-500);
+}
+.readyStock svg {
+  color: var(--yellow-900);
+}
+.outofStock {
+  color: var(--red-900);
+  background-color: var(--red-100);
+}
+.outofStock h1 {
+  color: var(--red-500);
+}
+.outofStock svg {
+  color: var(--red-900);
 }

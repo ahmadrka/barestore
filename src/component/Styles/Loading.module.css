@@ -1,10 +1,10 @@
-.parent {
+/* .parent {
   width: 100dvw;
   height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .main {
   padding: var(--space-5);

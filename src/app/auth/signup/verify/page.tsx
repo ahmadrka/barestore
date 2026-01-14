@@ -8,7 +8,9 @@ import Loading from "@/app/loading";
 import { handleSignupVerify } from "@/lib/api/auth";
 import { getCookie } from "@/lib/helper/cookies";
 
-export default function Verify() {
+import { Suspense } from "react";
+
+function VerifyContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token") || "";
@@ -68,9 +70,9 @@ export default function Verify() {
     };
     checkToken();
     setLoading(false);
-  }, []);
+  }, [router, searchParams]);
 
-  if (loading) return Loading();
+  if (loading) return <Loading />;
 
   if (error) {
     return (
@@ -131,5 +133,13 @@ export default function Verify() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function Verify() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <VerifyContent />
+    </Suspense>
   );
 }

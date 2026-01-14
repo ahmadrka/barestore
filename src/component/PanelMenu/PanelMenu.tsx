@@ -1,133 +1,209 @@
 "use client";
-import styles from "./PanelMenu.module.css";
-import Icon from "../Icon/Icon";
-import { useEffect, useState, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import useLocalStorage from "@/hook/useLocalStorage";
 
-type MenuProp = {
-  storage: string;
-  title: string;
-  subtitle: string;
-  sort: {
+import Icon from "../Icon/Icon";
+import styles from "./PanelMenu.module.css";
+import button from "../Styles/Button.module.css";
+import { DropdownMenu } from "../DropdownMenu/DropdownMenu";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDebounce } from "@/hook/useDebounce";
+import { searchProduct } from "@/lib/api/products";
+
+type Value = {
+  id: number;
+  key: string;
+  default: string;
+  items: {
     id: number;
-    name: string;
     value: string;
+    key: string;
+    onClick: () => void;
   }[];
-  filter: {
-    id: number;
-    name: string;
-    value: string;
-  }[];
-  defaultView?: "list" | "plot";
 };
 
-export default function PanelMenu({ data }: { data: MenuProp }) {
+export default function PanelMenu({
+  value,
+  storeId,
+}: {
+  value: Value[];
+  storeId: number;
+}) {
   const router = useRouter();
+  const params = useParams();
   const searchParams = useSearchParams();
-  const searchKey = searchParams.get("search");
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [search, setSearch] = useState(searchKey || "");
-  const [sortBy, setSortBy] = useLocalStorage(`${data.storage}-sort-by`);
-  const [filter, setFilter] = useLocalStorage(`${data.storage}-filter`);
-  const [view, setView] = useLocalStorage(
-    `${data.storage}-view`,
-    data.defaultView || "list"
-  );
+  const [search, setSearch] = useState(searchParams.get("search") || "");
+  const [page, setPage] = useState({
+    page: searchParams.get("page") || "1",
+    limit: 10,
+  });
+  const debouncedSearch = useDebounce(search, 800);
+  const debouncedPage = useDebounce(page, 800);
+
+  const meta = {
+    totalPages: 10,
+  };
+
+  const handlePageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const params = new URLSearchParams(window.location.search);
+    if (page.page === "") params.delete("page");
+    else params.set("page", page.page);
+    router.push(`?${params.toString()}`);
+    setPage(page);
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handlePageChange = async (step: number) => {
+    if (isLoading) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const currentPage = Number(params.get("page")) || 1;
+    const newPage = currentPage + step;
+
+    if (newPage < 1 || (meta?.totalPages && newPage > meta.totalPages)) return;
+
+    setIsLoading(true);
+
+    params.set("page", newPage.toString());
+    router.push(`?${params.toString()}`);
+    // kamu men-set setIsLoading(false) setelah data berhasil didapat.
+  };
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    search
-      ? router.push(`?search=${encodeURIComponent(search)}`)
-      : router.push("?");
+    const params = new URLSearchParams(window.location.search);
+    if (search === "") params.delete("search");
+    else params.set("search", search);
+    router.push(`?${params.toString()}`);
+    setSearch(search);
+  };
+
+  const handleSearchDebounce = () => {
+    if (search === "") {
+      const params = new URLSearchParams(window.location.search);
+      params.delete("search");
+      router.push(`?${params.toString()}`);
+      setSearch(search);
+    } else {
+      const params = new URLSearchParams(window.location.search);
+      params.set("search", search);
+      router.push(`?${params.toString()}`);
+      setSearch(search);
+    }
   };
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        inputRef.current?.focus();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+    handleSearchDebounce();
+  }, [debouncedSearch]);
 
   return (
-    <div className={styles.parent}>
-      <menu className={styles.main}>
-        <div className={styles.menu}>
-          <h2 className={styles.title}>{data.title}</h2>
-          <p className={styles.subtitle}>{data.subtitle}</p>
-        </div>
-        <div className={styles.menu}>
-          <form
-            className={styles.search}
-            onSubmit={(e) => handleSearchSubmit(e)}
-            title="Search"
-          >
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Search"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-              }}
-            />
-            <button type="submit">
-              <Icon name="menu" width={16} />
+    <menu className={styles.panelMenu}>
+      <div className={styles.pagination}>
+        <button
+          className={`${styles.button} ${
+            (searchParams.get("page") === "1" ||
+              searchParams.get("page") === null) &&
+            button.disabled
+          }`}
+          onClick={() => {
+            handlePageChange(-1);
+          }}
+        >
+          <Icon name="chevronLeft" width={24} />
+        </button>
+        <DropdownMenu>
+          <DropdownMenu.Trigger>
+            <button className={`${styles.buttonForm}`}>
+              Page {searchParams.get("page") || 1}/{meta.totalPages}
             </button>
-          </form>
-          <select
-            className={styles.dropdown}
-            title="Sort By"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content
+            position="middle-horizontal"
+            closeOnClick={false}
           >
-            {data.sort.map((item: any) => (
-              <option key={item.id} value={item.value}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-          <select
-            className={styles.dropdown}
-            title="Filter"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            <DropdownMenu.Section>
+              <DropdownMenu.Item width="max-content">
+                <form onSubmit={(e) => handlePageSubmit(e)}>
+                  <label htmlFor="page">
+                    <span>Page </span>
+                    {/* <input
+                      id="page"
+                      type="number"
+                      min={1}
+                      max={page.limit}
+                      value={page.page}
+                      onChange={(e) => {
+                        setPage({ ...page, page: e.target.value });
+                      }}
+                    />
+                    <span>/{page.limit}</span> */}
+                  </label>
+                </form>
+              </DropdownMenu.Item>
+            </DropdownMenu.Section>
+          </DropdownMenu.Content>
+        </DropdownMenu>
+        <button
+          className={`${styles.button} ${
+            searchParams.get("page") === meta.totalPages.toString()
+              ? button.disabled
+              : ""
+          }`}
+          onClick={() => {
+            handlePageChange(1);
+          }}
+        >
+          <Icon name="chevronRight" width={24} />
+        </button>
+      </div>
+      <form
+        className={styles.search}
+        onSubmit={(e) => handleSearchSubmit(e)}
+        onReset={(e) => setSearch("")}
+      >
+        <label htmlFor="search">
+          <input
+            id="search"
+            type="search"
+            value={search}
+            placeholder="Search..."
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
+        {search && (
+          <button
+            type="reset"
+            className={styles.searchReset}
+            style={{ display: "none" }}
           >
-            {data.filter.map((item: any) => (
-              <option key={item.id} value={item.value}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-          <form className={styles.view}>
-            <input
-              type="radio"
-              name="view"
-              id="viewList"
-              checked={view === "list"}
-              onChange={() => setView("list")}
-            />
-            <label htmlFor="viewList" title="List View">
-              <Icon name="viewList" width={20} />
-            </label>
-            <input
-              type="radio"
-              name="view"
-              id="viewPlot"
-              checked={view === "plot"}
-              onChange={() => setView("plot")}
-            />
-            <label htmlFor="viewPlot" title="Plot View">
-              <Icon name="viewPlot" width={20} />
-            </label>
-          </form>
-        </div>
-      </menu>
-    </div>
+            <Icon name="cross" width={24} />
+          </button>
+        )}
+        <button type="submit" className={styles.searchSubmit}>
+          <Icon name="search" width={24} />
+        </button>
+      </form>
+      {value.map((item) => (
+        <DropdownMenu key={item.id}>
+          <DropdownMenu.Trigger>
+            <button className={`${styles.button}`}>
+              {item.items.find((i) => i.key === searchParams.get(item.key))
+                ?.value || item.default}
+              <Icon name="chevronDown" width={24} />
+            </button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            <DropdownMenu.Section>
+              {item.items.map((item) => (
+                <DropdownMenu.Item key={item.id} onClick={item.onClick}>
+                  {item.value}
+                </DropdownMenu.Item>
+              ))}
+            </DropdownMenu.Section>
+          </DropdownMenu.Content>
+        </DropdownMenu>
+      ))}
+    </menu>
   );
 }

@@ -3,6 +3,7 @@ import { removeCookie } from "./lib/helper/cookies";
 
 export default async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
+  const searchParams = req.nextUrl.searchParams;
 
   const refreshToken = req.cookies.get("refreshToken")?.value;
   const token = req.cookies.get("accessToken")?.value;
@@ -27,7 +28,7 @@ export default async function middleware(req: NextRequest) {
     await removeCookie("refreshToken");
     await removeCookie("userData");
     const url = new URL("/auth", req.url);
-    url.searchParams.set("redirect", pathname);
+    url.searchParams.set("redirect", pathname + "?" + searchParams.toString());
     return NextResponse.redirect(url);
   }
 

@@ -9,10 +9,9 @@ import useLocalStorage from "./useLocalStorage";
  * @param defaultValue The value to use if the key isn't set yet.
  */
 export default function usePreference(key: string, defaultValue?: any) {
-  const [preferences, setPreferences] = useLocalStorage<Record<string, any>>(
-    "barestorePreference",
-    {}
-  );
+  const [preferences, setPreferences, isLoaded] = useLocalStorage<
+    Record<string, any>
+  >("barestorePreference", {});
 
   // Get the current value or fallback to default
   const value =
@@ -25,5 +24,5 @@ export default function usePreference(key: string, defaultValue?: any) {
     });
   };
 
-  return [value, setValue] as const;
+  return [value, setValue, isLoaded] as const;
 }

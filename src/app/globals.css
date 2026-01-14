@@ -32,6 +32,7 @@
   --green-500: oklch(78% 0.16 145);
   --green-900: oklch(40% 0.12 145);
 
+  --blue-50: oklch(98% 0.01 255);
   --blue-100: oklch(94% 0.04 255);
   --blue-500: oklch(75% 0.14 255);
   --blue-900: oklch(35% 0.12 255);
@@ -39,6 +40,22 @@
   --purple-100: oklch(94% 0.04 285);
   --purple-500: oklch(75% 0.14 285);
   --purple-900: oklch(35% 0.12 285);
+
+  --toska-100: oklch(95% 0.04 190);
+  --toska-500: oklch(78% 0.14 190);
+  --toska-900: oklch(40% 0.12 190);
+
+  --magenta-100: oklch(94% 0.04 330);
+  --magenta-500: oklch(75% 0.16 330);
+  --magenta-900: oklch(40% 0.12 330);
+
+  --pink-100: oklch(94% 0.04 5);
+  --pink-500: oklch(75% 0.14 5);
+  --pink-900: oklch(40% 0.12 5);
+
+  --slate-100: oklch(92% 0.01 255);
+  --slate-500: oklch(60% 0.02 255);
+  --slate-900: oklch(25% 0.03 255);
 
   /* Colors Semantic */
   --color-primary: var(--neutral-700);
@@ -54,9 +71,9 @@
   --background-base: var(--neutral-0);
   --background-body: var(--neutral-10);
   --background-surface: var(--neutral-20);
-  --background-button-primary: var(--neutral-500);
-  --background-button-primary-hover: var(--neutral-600);
-  --background-button-primary-active: var(--neutral-700);
+  --background-button-primary: var(--neutral-600);
+  --background-button-primary-hover: var(--neutral-700);
+  --background-button-primary-active: var(--neutral-800);
   --background-button-secondary-hover: var(--neutral-50);
   --background-button-secondary-active: var(--neutral-150);
   --background-hover: var(--neutral-150);
@@ -82,7 +99,7 @@
   --outline-bottom: 2px solid var(--neutral-150); */
 
   --outline-button-secondary: 1px solid var(--neutral-200);
-  --outline-button-secondary-active: 1px solid var(--neutral-500);
+  --outline-button-secondary-active: 1px solid var(--neutral-400);
   --outline-form: 1px solid var(--neutral-200);
   --outline-form-active: 2px solid var(--neutral-500);
 
@@ -97,6 +114,9 @@
   --box-shadow: inset 0 1px 0 0 #ffffff, inset 0 -1px 0 0 var(--neutral-20),
     0 4px 6px -1px var(--neutral-100);
 
+  --box-shadow-section: inset 0 1px 0 0 #ffffff,
+    inset 0 -1px 0 0 var(--neutral-20), 0 4px 6px -1px var(--neutral-200);
+
   /* Font Sizes */
   --font-size-xs: 12px;
   --font-size-sm: 14px;
@@ -109,6 +129,7 @@
   --font-size-5xl: 48px;
 
   /* Spacing */
+  --space-05: 2px;
   --space-0: 4px;
   --space-1: 6px;
   --space-2: 8px;
@@ -126,6 +147,7 @@
   /* Radius */
   --radius: 10px;
   --sub-radius: 6px;
+  --sub-sub-radius: 3px;
   --full-radius: 100000px;
   --shadow: 0 1px 5px;
 
@@ -186,6 +208,22 @@ select {
   color: inherit;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: var(--color-primary) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  display: none;
+}
+
 ul,
 ol {
   list-style: none;
@@ -199,4 +237,36 @@ a {
 svg {
   display: block;
   color: var(--color-primary);
+}
+
+#nprogress .bar {
+  background: var(--blue-900) !important;
+  box-shadow: 0 0 10px var(--blue-500), 0 0 5px var(--blue-500) !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--blue-500), 0 0 5px var(--blue-500) !important;
+}
+
+/* Menargetkan semua toast sonner */
+[data-sonner-toast] {
+  border: none !important;
+  --bg-color: var(--background-surface);
+  --text-color: var(--color-foreground);
+
+  font-family: "Inter", sans-serif;
+  border-radius: var(--radius) !important;
+  background: var(--bg-color) !important;
+  box-shadow: var(--box-shadow-section) !important;
+}
+
+/* Mengubah warna khusus tipe success/error */
+[data-sonner-toast][data-type="success"] {
+  --text-color: var(--green-900);
+  --bg-color: var(--background-success);
+}
+
+[data-sonner-toast][data-type="error"] {
+  --text-color: var(--red-900);
+  --bg-color: var(--background-error);
 }

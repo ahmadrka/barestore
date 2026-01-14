@@ -1,42 +1,55 @@
-import PanelNavbar from "@/component/PanelNavbar/PanelNavbar";
-import PanelMenu from "@/component/PanelMenu/PanelMenu";
-import RenderItem from "@/component/RenderItem/RenderItem";
-import styles from "./styles.module.css";
-import Icon from "@/component/Icon/Icon";
-import Link from "next/link";
+"use client";
 
-export default function products() {
-  const panelMenuProps = {
-    storage: "products",
-    title: "Product Management",
-    subtitle: "1234 Items",
-    sort: [
-      { id: 1, name: "Last Updated", value: "last-updated" },
-      { id: 2, name: "Newest", value: "newest" },
-      { id: 3, name: "Oldest", value: "oldest" },
-      { id: 4, name: "A-Z", value: "a-z" },
-      { id: 5, name: "Z-A", value: "z-a" },
-    ],
-    filter: [
-      { id: 1, name: "All", value: "all" },
-      { id: 2, name: "Ready", value: "ready" },
-      { id: 3, name: "Out Of Stock", value: "out-of-stock" },
-    ],
-    defaultView: "list" as const,
+import styles from "./styles.module.css";
+import button from "@/component/Styles/Button.module.css";
+import { InfoMenu } from "@/component/InfoMenu/InfoMenu";
+import { useEffect, useState } from "react";
+import usePreferences from "@/hook/usePreferences";
+import { useRouter } from "next/navigation";
+import Loading from "@/app/loading";
+import { getStoreInfo } from "@/lib/api/stores";
+import { StoreInfo } from "@/type/stores";
+
+export default function ProductsIndexPage() {
+  const router = useRouter();
+  const [storeInfo, setStoreInfo] = useState<StoreInfo>();
+  const { preferences, isLoaded } = usePreferences();
+  const storeSelection = preferences.storeSelection;
+
+  const updateStoreInfo = async () => {
+    if (!storeSelection) return;
+    const data = await getStoreInfo(storeSelection);
+    if (data) setStoreInfo(data);
   };
 
+  useEffect(() => {
+    if (isLoaded && !storeSelection) {
+      router.replace("/home?redirect=/products");
+    }
+    if (storeSelection) updateStoreInfo();
+  }, [isLoaded, storeSelection, router]);
+
+  if (!isLoaded || (isLoaded && !storeSelection)) return <Loading />;
+
   return (
-    <div className={styles.parent}>
-      <PanelNavbar status="products" />
-      <main className={styles.main}>
-        <PanelMenu data={panelMenuProps} />
-        <RenderItem />
-        <Link href="/products/create">
-          <button className={styles.addButton}>
-            <Icon name="plus" width={32} />
-          </button>
-        </Link>
-      </main>
-    </div>
+    <InfoMenu>
+      <InfoMenu.Thumbnail
+        src="/images/banner/products-banner.png"
+        width={1600}
+        height={900}
+        aspectRatio={{ width: 1, height: 1 }}
+      />
+      <InfoMenu.Main className={styles.infoMenu}>
+        <InfoMenu.Component className={styles.infoComponent}>
+          <h1>{storeInfo?.productsCount || 0} Products</h1>
+        </InfoMenu.Component>
+        <InfoMenu.Footer>
+          <a href="/products/create" className={button.primary}>
+            Create Product
+          </a>
+          <button className={button.secondary}>Select Product</button>
+        </InfoMenu.Footer>
+      </InfoMenu.Main>
+    </InfoMenu>
   );
 }

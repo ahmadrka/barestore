@@ -1,9 +1,9 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/app/loading";
 
-export default function Auth() {
+function AuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "";
@@ -15,7 +15,15 @@ export default function Auth() {
     } else {
       router.replace(`/auth/login`);
     }
-  }, [router]);
+  }, [router, redirect]);
 
-  return Loading();
+  return <Loading />;
+}
+
+export default function Auth() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <AuthContent />
+    </Suspense>
+  );
 }

@@ -1,39 +1,31 @@
 // Product type
-type Product = {
-  id: number;
+export type Product = {
+  productId: number;
   title: string;
   price: number;
-  description: string;
-  status: "available" | "preorder" | "unavailable";
-  stock: number | null;
-  weightType: "relative" | "absolute";
+  description?: string;
+  stock: number | 1;
+  sku?: string;
+  plu?: string;
+  barcode?: string;
   categoryId?: number;
-  variantOptions?: VariantOption[];
-  variantCombinations?: VariantCombination[];
-  images: string[];
+  weightType: "RELATIVE" | "ABSOLUTE";
+  status: "AVAILABLE" | "PREORDER" | "UNAVAILABLE" | "ARCHIVED" | "REMOVED";
+  images: { imageId: number; url: string; thumbnail: string; order: number }[];
   createdAt: string;
   updatedAt?: string;
+  deletedAt?: string;
 };
 
-// Product category
-type Category = {
-  id: number;
-  name: string;
-  image?: string;
-};
-
-// Define available variant options for products
-type VariantOption = {
-  name: string;
-  value: string[];
-};
-
-// Product variant combinations
-type VariantCombination = {
-  id: number;
-  options: Record<string, string>;
-  price?: number;
-  stock?: number;
+export type CreateProduct = {
+  title: string;
+  price: number;
+  description?: string;
+  stock: number | 1;
   sku?: string;
-  image?: string;
+  plu?: string;
+  barcode?: string;
+  categoryId?: number;
+  weightType: "RELATIVE" | "ABSOLUTE";
+  // status: "AVAILABLE" | "PREORDER" | "UNAVAILABLE" | "ARCHIVED" | "REMOVED";
 };

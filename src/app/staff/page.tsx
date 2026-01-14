@@ -1,12 +1,15 @@
+"use client";
+import { Suspense } from "react";
 import PanelNavbar from "@/component/PanelNavbar/PanelNavbar";
-import PanelMenu from "@/component/PanelMenu/PanelMenu";
+// import PanelMenu from "@/component/PanelMenu-old/PanelMenu";
 import styles from "./styles.module.css";
+import Loading from "../loading";
 
-export default function staff() {
+export default function StaffContent() {
   const panelMenuProps = {
     storage: "staff",
     title: "Staff Management",
-    subtitle: "1234 Menbers",
+    subtitle: "1234 Members",
     sort: [
       { id: 1, name: "Last Online", value: "last_online" },
       { id: 2, name: "Newest", value: "newest" },
@@ -26,9 +29,8 @@ export default function staff() {
 
   return (
     <div className={styles.parent}>
-      <PanelNavbar status="staff" />
       <main className={styles.main}>
-        <PanelMenu data={panelMenuProps} />
+        {/* <PanelMenu data={panelMenuProps} /> */}
       </main>
     </div>
   );

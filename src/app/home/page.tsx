@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getUser } from "@/lib/api/users";
 import { getStores } from "@/lib/api/stores";
 import styles from "./styles.module.css";
+import items from "@/component/Styles/ItemList.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import button from "@/component/Styles/Button.module.css";
@@ -12,15 +13,20 @@ import { UserProfile } from "@/type/users";
 import Loading from "../loading";
 import { useRouter } from "next/navigation";
 import Icon from "@/component/Icon/Icon";
-import usePreference from "@/hook/usePreference";
+import usePreferences from "@/hook/usePreferences";
+import { useSearchParams } from "next/navigation";
 
 export default function SetupPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "";
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<UserProfile | null>(null);
   const [stores, setStores] = useState<UserStore[] | null>(null);
-  const [storeSelection, setStoreSelection] = usePreference("storeSelection");
-  const [showSelection, setShowSelection] = usePreference("showSelection");
+  const { preferences, setPreference, isLoaded } = usePreferences();
+
+  const storeSelection = preferences.storeSelection;
+  const showSelection = preferences.showSelection;
 
   const fetchData = async () => {
     try {
@@ -37,22 +43,23 @@ export default function SetupPage() {
   };
 
   const handleStoreClick = (storeId: number) => {
-    setStoreSelection(storeId);
-    router.push(`/dashboard`);
+    setPreference("storeSelection", storeId);
+    router.replace(redirect || `/dashboard`);
   };
 
   useEffect(() => {
-    if (showSelection != null && storeSelection != null) {
-      router.push(`/dashboard`);
+    if (isLoaded && showSelection === false && storeSelection) {
+      router.replace(redirect || `/dashboard`);
     }
-  }, [showSelection, storeSelection, router]);
+  }, [isLoaded, showSelection, storeSelection, router]);
 
   useEffect(() => {
-    fetchData();
-    setLoading(false);
+    fetchData().finally(() => {
+      setLoading(false);
+    });
   }, []);
 
-  if (loading) return Loading();
+  if (loading || !isLoaded) return <Loading />;
 
   return (
     <div className={styles.parent}>
@@ -73,7 +80,7 @@ export default function SetupPage() {
             </p>
           </div>
           <div
-            className={styles.itemList}
+            className={items.itemList}
             style={{ display: stores?.length ? "flex" : "none" }}
           >
             {stores?.map((store) => {
@@ -88,23 +95,24 @@ export default function SetupPage() {
               ] as const;
               const now = new Date();
               const dayName = days[now.getDay()];
-              const operatingHour = store.store.operatingHour[dayName];
+              const operatingHour = store.store.operatingHour?.[dayName];
               const currentTime = now.getHours() * 60 + now.getMinutes();
               const parseTime = (timeStr: string) => {
                 const [hrs, mins] = timeStr.split(":").map(Number);
                 return hrs * 60 + mins;
               };
 
-              const isOpen =
-                operatingHour.isOpen &&
-                currentTime >= parseTime(operatingHour.open) &&
-                currentTime <= parseTime(operatingHour.close);
+              const isOpen = operatingHour
+                ? operatingHour.isOpen &&
+                  currentTime >= parseTime(operatingHour.open) &&
+                  currentTime <= parseTime(operatingHour.close)
+                : store.store.storeStatus === "ACTIVE";
 
               return (
                 <button
                   key={store.storeId}
                   onClick={() => handleStoreClick(store.storeId)}
-                  className={styles.item}
+                  className={items.item}
                 >
                   <Image
                     src={
@@ -115,17 +123,17 @@ export default function SetupPage() {
                     height={100}
                     unoptimized
                   />
-                  <span className={styles.title}>
+                  <span className={items.title}>
                     <h2>{store.store.name}</h2>
                     <h3>{store.store.description}</h3>
                   </span>
                   <div
-                    className={`${styles.status} ${
+                    className={`${items.status} ${
                       store.store.storeStatus !== "ACTIVE"
-                        ? styles.inactive
+                        ? items.inactive
                         : isOpen
-                        ? styles.open
-                        : styles.closed
+                        ? items.open
+                        : items.closed
                     }`}
                   >
                     <Icon
@@ -164,7 +172,9 @@ export default function SetupPage() {
           ? null
           : showSelection == null && (
               <button
-                onClick={() => setShowSelection(false)}
+                onClick={() => {
+                  setPreference("showSelection", false);
+                }}
                 className={styles.button}
               >
                 <u>don't show this again</u>

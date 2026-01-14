@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "../styles.module.css";
 import button from "@/component/Styles/Button.module.css";
@@ -13,8 +13,10 @@ import {
   handleMicrosoftOAuth,
 } from "@/lib/api/oauth";
 import Icon from "@/component/Icon/Icon";
+import { toast } from "sonner";
+import Loading from "@/app/loading";
 
-export default function Login() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "";
@@ -26,30 +28,34 @@ export default function Login() {
     password: string,
     e: React.FormEvent<HTMLFormElement>
   ) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    if (!useValidateEmail(login.email)) {
-      setError("Invalid email");
-      return;
+      if (!useValidateEmail(login.email)) {
+        setError("Invalid email");
+        return;
+      }
+
+      const loginData = await handleLogin(email, password);
+
+      if (loginData.errorCode === "USER_NOT_FOUND") {
+        setError("User not found");
+        return;
+      }
+
+      if (loginData.errorCode === "INVALID_PASSWORD") {
+        setError("Invalid password");
+        return;
+      }
+
+      if (redirect) {
+        router.push(redirect);
+        return;
+      }
+      router.push("/home");
+    } catch (error) {
+      toast.error("Failed to login");
     }
-
-    const loginData = await handleLogin(email, password);
-
-    if (loginData.errorCode === "USER_NOT_FOUND") {
-      setError("User not found");
-      return;
-    }
-
-    if (loginData.errorCode === "INVALID_PASSWORD") {
-      setError("Invalid password");
-      return;
-    }
-
-    if (redirect) {
-      router.push(redirect);
-      return;
-    }
-    router.push("/home");
   };
 
   return (
@@ -150,5 +156,13 @@ export default function Login() {
         </Link>
       </main>
     </div>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <LoginForm />
+    </Suspense>
   );
 }

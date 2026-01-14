@@ -17,7 +17,15 @@ export default function Icon({ name, width, height }: IconProp) {
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M15.5 4C16.0523 4 16.5 4.44772 16.5 5C16.5 5.55228 16.0523 6 15.5 6H10.3994L6 10.1797V18H13V11H8L10.2227 9H18.9043C18.9204 9 18.9363 9.0012 18.9521 9.00195C18.968 9.0012 18.9839 9 19 9C19.5523 9 20 9.44772 20 10V19C20 19.5523 19.5523 20 19 20C18.4477 20 18 19.5523 18 19V11H15V19C15 19.5523 14.5523 20 14 20H5C4.44772 20 4 19.5523 4 19V10C4 9.95663 4.00343 9.91399 4.00879 9.87207C3.97143 9.5686 4.07211 9.25226 4.31055 9.02539L9.31055 4.27539C9.32338 4.2632 9.33729 4.25161 9.35059 4.24023C9.35689 4.23484 9.3627 4.22887 9.36914 4.22363C9.38765 4.20857 9.40651 4.1942 9.42578 4.18066C9.43287 4.17569 9.44004 4.17081 9.44727 4.16602C9.4915 4.13665 9.53763 4.11141 9.58496 4.08984C9.59978 4.08307 9.61468 4.07637 9.62988 4.07031C9.64503 4.06429 9.66041 4.05896 9.67578 4.05371C9.68967 4.04895 9.70361 4.0442 9.71777 4.04004C9.73713 4.03437 9.75677 4.02986 9.77637 4.02539C9.78804 4.02272 9.7997 4.01983 9.81152 4.01758C9.83063 4.01393 9.84989 4.01131 9.86914 4.00879C9.88274 4.00701 9.89639 4.00513 9.91016 4.00391C9.93356 4.00181 9.95701 4.00045 9.98047 4H15.5Z"
+          d="M13 20C13 20.5523 12.5523 21 12 21H4C3.44772 21 3 20.5523 3 20V12C3 11.4477 3.44772 11 4 11H12C12.5523 11 13 11.4477 13 12V20Z"
+          fill="currentColor"
+        />
+        <path
+          d="M21 20C21 20.5523 20.5523 21 20 21H16C15.4477 21 15 20.5523 15 20V8.11454C15 7.56225 15.4477 7.11454 16 7.11454H20C20.5523 7.11454 21 7.56225 21 8.11454V20Z"
+          fill="currentColor"
+        />
+        <path
+          d="M12.2278 3C12.4323 3.00007 12.6294 3.08139 12.774 3.226C12.9183 3.37052 12.9999 3.56669 13 3.77093V5.80246C12.9998 5.81115 12.9987 5.82009 12.9987 5.82882C12.9987 5.83722 12.9998 5.84558 13 5.85393V8C13 8.55228 12.5523 9 12 9H8.11454C7.56225 9 7.11454 8.55228 7.11454 8V3.77093C7.11467 3.56651 7.19599 3.37056 7.34054 3.226C7.48508 3.08153 7.68111 3.00013 7.88546 3H12.2278Z"
           fill="currentColor"
         />
       </svg>
@@ -58,14 +66,120 @@ export default function Icon({ name, width, height }: IconProp) {
     ),
     plus: (
       <svg
-        width="24"
-        height="24"
+        width={width}
+        height={height}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M12 5V19M5 12H19"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    cross: (
+      <svg
+        width={width}
+        height={height}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ transform: "rotate(45deg)" }}
+      >
+        <path
+          d="M12 5V19M5 12H19"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    search: (
+      <svg
+        width={width}
+        height={height}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20 20L14.6667 14.6667M4 10.2222C4 11.0393 4.16094 11.8484 4.47364 12.6034C4.78633 13.3583 5.24466 14.0442 5.82245 14.622C6.40023 15.1998 7.08617 15.6581 7.84108 15.9708C8.596 16.2835 9.40511 16.4444 10.2222 16.4444C11.0393 16.4444 11.8484 16.2835 12.6034 15.9708C13.3583 15.6581 14.0442 15.1998 14.622 14.622C15.1998 14.0442 15.6581 13.3583 15.9708 12.6034C16.2835 11.8484 16.4444 11.0393 16.4444 10.2222C16.4444 9.40511 16.2835 8.596 15.9708 7.84108C15.6581 7.08617 15.1998 6.40023 14.622 5.82245C14.0442 5.24466 13.3583 4.78633 12.6034 4.47364C11.8484 4.16094 11.0393 4 10.2222 4C9.40511 4 8.596 4.16094 7.84108 4.47364C7.08617 4.78633 6.40023 5.24466 5.82245 5.82245C5.24466 6.40023 4.78633 7.08617 4.47364 7.84108C4.16094 8.596 4 9.40511 4 10.2222Z"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    chevronRight: (
+      <svg
+        width={width}
+        height={height}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9 6L15 12L9 18"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    chevronLeft: (
+      <svg
+        width={width}
+        height={height}
+        style={{ transform: "rotate(180deg)" }}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9 6L15 12L9 18"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    chevronDown: (
+      <svg
+        width={width}
+        height={height}
+        style={{ transform: "rotate(90deg)" }}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9 6L15 12L9 18"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    chevronUp: (
+      <svg
+        width={width}
+        height={height}
+        style={{ transform: "rotate(270deg)" }}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9 6L15 12L9 18"
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
@@ -467,7 +581,7 @@ export default function Icon({ name, width, height }: IconProp) {
         preserveAspectRatio="xMidYMid"
         fill="#000000"
       >
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g
           id="SVGRepo_tracerCarrier"
           strokeLinecap="round"
@@ -495,7 +609,7 @@ export default function Icon({ name, width, height }: IconProp) {
     ),
     microsoft: (
       <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g
           id="SVGRepo_tracerCarrier"
           strokeLinecap="round"
@@ -511,7 +625,7 @@ export default function Icon({ name, width, height }: IconProp) {
     ),
     facebook: (
       <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g
           id="SVGRepo_tracerCarrier"
           strokeLinecap="round"

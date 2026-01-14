@@ -18,3 +18,12 @@ export type StoreProfile = {
   createdAt: string;
   updatedAt?: string;
 };
+
+export type StoreInfo = {
+  storeId: number;
+  memberCount: number;
+  categoriesCount: number;
+  productsCount: number;
+  readyStock: number;
+  outofStock: number;
+};

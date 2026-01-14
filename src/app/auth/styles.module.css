@@ -76,6 +76,10 @@
   border-bottom: var(--outline-normal);
 }
 
+.auth button {
+  width: 100%;
+}
+
 @media (max-width: 512px) {
   .main {
     height: 100dvh;

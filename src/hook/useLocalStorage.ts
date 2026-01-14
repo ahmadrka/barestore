@@ -1,30 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export default function useLocalStorage<T>(key: string, initial: T) {
+  // Use a lazy initializer to read from localStorage immediately on the client
   const [value, setValue] = useState<T>(initial);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const stored = localStorage.getItem(key);
-    if (stored !== null) {
-      try {
-        setValue(JSON.parse(stored));
-      } catch (error) {
-        // If parsing fails, treat it as a plain string or the initial value
-        setValue(stored as unknown as T);
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(key);
+      if (stored !== null) {
+        try {
+          setValue(JSON.parse(stored));
+        } catch (error) {
+          setValue(stored as unknown as T);
+        }
       }
+      setIsLoaded(true);
     }
   }, [key]);
 
-  const setToggle = (v: T) => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(key, JSON.stringify(v));
-      setValue(v);
-    }
-  };
+  const setToggle = useCallback(
+    (v: T) => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem(key, JSON.stringify(v));
+        setValue(v);
+      }
+    },
+    [key]
+  );
 
-  return [value, setToggle] as const;
+  return [value, setToggle, isLoaded] as const;
 }
