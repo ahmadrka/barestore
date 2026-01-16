@@ -6,13 +6,13 @@ import MainHeader from "@/component/MainHeader/MainHeader";
 import { useEffect } from "react";
 import { getUser } from "@/lib/api/users";
 import { InfoMenu } from "@/component/InfoMenu/InfoMenu";
-import { UserProfile } from "@/type/users";
+import { UserProfile } from "@/type/user";
 import { useState } from "react";
 import Icon from "@/component/Icon/Icon";
 import usePreferences from "@/hook/usePreferences";
 import { useRouter } from "next/navigation";
 import Loading from "../loading";
-import { StoreInfo } from "@/type/stores";
+import { StoreInfo } from "@/type/store";
 import { getStoreInfo, getStores } from "@/lib/api/stores";
 
 export default function Dashboard() {
@@ -133,7 +133,7 @@ export default function Dashboard() {
               <h2>{storeInfo?.outofStock} Items</h2>
             </div>
           </section>
-          <section className={styles.outofStock}>
+          <section className={styles.categories}>
             <div className={styles.sectionIcon}>
               <Icon name="cardboard" width={75} height={75} />
               <Icon name="chevronRight" width={66} height={66} />
@@ -143,7 +143,7 @@ export default function Dashboard() {
               <h2>{storeInfo?.categoriesCount} Categories</h2>
             </div>
           </section>
-          <section className={styles.outofStock}>
+          <section className={styles.workingHour}>
             <div className={styles.sectionIcon}>
               <Icon name="cardboard" width={75} height={75} />
               <Icon name="chevronRight" width={66} height={66} />

@@ -8,7 +8,8 @@ import usePreferences from "@/hook/usePreferences";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
 import { getStoreInfo } from "@/lib/api/stores";
-import { StoreInfo } from "@/type/stores";
+import { StoreInfo } from "@/type/store";
+import Link from "next/link";
 
 export default function ProductsIndexPage() {
   const router = useRouter();
@@ -44,10 +45,9 @@ export default function ProductsIndexPage() {
           <h1>{storeInfo?.productsCount || 0} Products</h1>
         </InfoMenu.Component>
         <InfoMenu.Footer>
-          <a href="/products/create" className={button.primary}>
-            Create Product
-          </a>
-          <button className={button.secondary}>Select Product</button>
+          <Link href="/products/create" className={button.primary}>
+            Create New Product
+          </Link>
         </InfoMenu.Footer>
       </InfoMenu.Main>
     </InfoMenu>

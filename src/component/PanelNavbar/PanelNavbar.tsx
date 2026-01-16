@@ -7,7 +7,7 @@ import styles from "./PanelNavbar.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "../Icon/Icon";
-import { UserProfile } from "@/type/users";
+import { UserProfile } from "@/type/user";
 import { DropdownMenu } from "@/component/DropdownMenu/DropdownMenu";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,13 @@ export default function PanelNavbar() {
   const pathname = usePathname();
   const context = useContext(ToggleContext)!;
   const [userData, setUserData] = useState<UserProfile | null>(null);
-  const storeRoutes = ["/dashboard", "/products", "/staff", "/statistic"];
+  const storeRoutes = [
+    "/dashboard",
+    "/products",
+    "/staff",
+    "/statistic",
+    "/transactions",
+  ];
   const homeRoutes = ["/home"];
 
   const handleLogoutButton = async () => {
@@ -224,6 +230,25 @@ export default function PanelNavbar() {
                 />
               </button>
               <span>Statistic</span>
+            </Link>
+          </li>
+          <li>
+            <Link href={"/transactions"}>
+              <button
+                className={
+                  pathname.includes("transactions")
+                    ? `${styles.iconActive}`
+                    : `${styles.icon}`
+                }
+              >
+                <Icon
+                  name={
+                    pathname.includes("transactions") ? "truckActive" : "truck"
+                  }
+                  width={32}
+                />
+              </button>
+              <span>Dashboard</span>
             </Link>
           </li>
         </ul>

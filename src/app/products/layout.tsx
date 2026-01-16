@@ -3,7 +3,7 @@
 import { getProducts } from "@/lib/api/products";
 import { getUser } from "@/lib/api/users";
 import { Product } from "@/type/product";
-import { UserProfile } from "@/type/users";
+import { UserProfile } from "@/type/user";
 import ProductPage from "./[id]/page";
 import {
   useParams,

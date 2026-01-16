@@ -6,6 +6,8 @@ import Image from "next/image";
 import Icon from "../Icon/Icon";
 import { useRouter } from "next/navigation";
 import { ContextMenu } from "../ContextMenu/ContextMenu";
+import type { Product } from "@/type/product";
+import type { StoreProfile } from "@/type/store";
 
 export default function RenderItem() {
   const router = useRouter();
@@ -51,16 +53,18 @@ export default function RenderItem() {
         {products?.map((data) => (
           <li
             className={styles.item}
-            key={data.id}
-            onDoubleClick={() => openItem(data.id, store?.id)}
+            key={data.productId}
+            onDoubleClick={() => openItem(data.productId, store?.storeId)}
             onContextMenu={(e) => {
               e.preventDefault();
-              openContextMenu(data.id);
+              openContextMenu(data.productId);
             }}
           >
             <div className={styles.itemTitle}>
               <Image
-                src={data.images[0]}
+                src={
+                  data.images[0]?.url || "/images/default/product-thumbnail.png"
+                }
                 width={42}
                 height={42}
                 alt="Thumbnail"

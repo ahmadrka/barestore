@@ -8,7 +8,7 @@ import { InfoMenu } from "@/component/InfoMenu/InfoMenu";
 import { Suspense, use, useEffect, useState } from "react";
 import { getProducts } from "@/lib/api/products";
 import { getUser } from "@/lib/api/users";
-import { UserProfile } from "@/type/users";
+import { UserProfile } from "@/type/user";
 import { Product } from "@/type/product";
 import usePreferences from "@/hook/usePreferences";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,8 @@ import Loading from "@/app/loading";
 import Image from "next/image";
 import Icon from "@/component/Icon/Icon";
 import { getStoreInfo } from "@/lib/api/stores";
-import { StoreInfo } from "@/type/stores";
+import { StoreInfo } from "@/type/store";
+import Link from "next/link";
 
 export default function ProductsPage({
   params,
@@ -66,49 +67,28 @@ export default function ProductsPage({
   if (!isLoaded || (isLoaded && !storeSelection)) return <Loading />;
 
   return (
-    <>
-      {id ? (
-        <InfoMenu>
-          <InfoMenu.Thumbnail
-            src={product?.images[0]?.url || "/images/banner/product-banner.png"}
-            width={1600}
-            height={900}
-            aspectRatio={{ width: 1, height: 1 }}
-          />
-          <InfoMenu.Main className={styles.infoMenu}>
-            <InfoMenu.Component className={styles.infoComponent}>
-              <h1>{product?.title}</h1>
-              <h2>{product?.description}</h2>
-            </InfoMenu.Component>
-            <InfoMenu.Footer>
-              <a href={`/products/${id}/edit`} className={button.primary}>
-                Edit Product
-              </a>
-              <button className={button.secondary}>Select Product</button>
-            </InfoMenu.Footer>
-          </InfoMenu.Main>
-        </InfoMenu>
-      ) : (
-        <InfoMenu>
-          <InfoMenu.Thumbnail
-            src="/images/banner/products-banner.png"
-            width={1600}
-            height={900}
-            aspectRatio={{ width: 1, height: 1 }}
-          />
-          <InfoMenu.Main className={styles.infoMenu}>
-            <InfoMenu.Component className={styles.infoComponent}>
-              <h1>{storeInfo?.productsCount} Products</h1>
-            </InfoMenu.Component>
-            <InfoMenu.Footer>
-              <a href="/products/create" className={button.primary}>
-                Create Product
-              </a>
-              <button className={button.secondary}>Select Product</button>
-            </InfoMenu.Footer>
-          </InfoMenu.Main>
-        </InfoMenu>
-      )}
-    </>
+    <InfoMenu>
+      <InfoMenu.Thumbnail
+        src={product?.images[0]?.url || "/images/banner/product-banner.png"}
+        width={1600}
+        height={900}
+        aspectRatio={{ width: 1, height: 1 }}
+      />
+      <InfoMenu.Main className={styles.infoMenu}>
+        <InfoMenu.Component className={styles.infoComponent}>
+          <h1>{product?.title}</h1>
+          <h2>{product?.description}</h2>
+          <p>{product?.price}</p>
+        </InfoMenu.Component>
+        <InfoMenu.Footer>
+          <Link href={`/products/${id}/edit`} className={button.primary}>
+            Edit Product
+          </Link>
+          <Link href="/products/create" className={button.secondary}>
+            Create New Product
+          </Link>
+        </InfoMenu.Footer>
+      </InfoMenu.Main>
+    </InfoMenu>
   );
 }

@@ -1,5 +1,5 @@
 import axiosInstance from "./axiosInstance";
-import { UserStore } from "@/type/userStores";
+import { UserStore } from "@/type/userStore";
 
 export async function getStores(
   storeId?: number

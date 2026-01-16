@@ -130,3 +130,23 @@
 .outofStock svg {
   color: var(--red-900);
 }
+.categories {
+  color: var(--toska-900);
+  background-color: var(--toska-100);
+}
+.categories h1 {
+  color: var(--toska-500);
+}
+.categories svg {
+  color: var(--toska-900);
+}
+.workingHour {
+  color: var(--magenta-900);
+  background-color: var(--magenta-100);
+}
+.workingHour h1 {
+  color: var(--magenta-500);
+}
+.workingHour svg {
+  color: var(--magenta-900);
+}

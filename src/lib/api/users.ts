@@ -1,6 +1,6 @@
 "use server";
 
-import { UserProfile } from "@/type/users";
+import { UserProfile } from "@/type/user";
 import { getCookie } from "../helper/cookies";
 import { handleRefreshToken } from "./auth";
 import axiosInstance from "./axiosInstance";

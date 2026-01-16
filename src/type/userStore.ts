@@ -1,4 +1,4 @@
-import { StoreProfile } from "./stores";
+import { StoreProfile } from "./store";
 
 export type UserStore = {
   memberId: number;
