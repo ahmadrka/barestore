@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getCookie, removeCookie } from "../helper/cookies";
+import { toast } from "sonner";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const axiosInstance = axios.create({
@@ -47,6 +48,10 @@ axiosInstance.interceptors.response.use(
         await removeCookie("userData");
         window.location.href = "/auth";
       }
+    }
+
+    if (error.response?.status >= 500 || !error.response) {
+      toast.error("Backend error, please try again later.");
     }
 
     return Promise.reject(error);

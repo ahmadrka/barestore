@@ -63,7 +63,7 @@
 .secondaryButton {
   padding: var(--space-3) var(--space-7);
   background: transparent;
-  border: var(--outline-middle);
+  border: var(--outline-thin);
   border-radius: var(--sub-radius);
   font-weight: 600;
   font-size: var(--font-size-sm);
@@ -90,12 +90,12 @@
 .heroBadge {
   display: inline-block;
   padding: var(--space-1) var(--space-4);
-  background: var(--neutral-100);
+  background: var(--red-100);
   border-radius: 40px;
   font-size: var(--font-size-xs);
   font-weight: 600;
   margin-bottom: var(--space-5);
-  color: var(--neutral-600);
+  color: var(--red-900);
 }
 
 .heroTitle {
