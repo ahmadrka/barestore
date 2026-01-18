@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import PanelNavbar from "@/component/PanelNavbar/PanelNavbar";
 import MainHeader from "@/component/MainHeader/MainHeader";
 import QueryProvider from "@/context/QueryProvider/QueryProvider";
+import { PreferenceProvider } from "@/context/PreferenceProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { DropdownMenu } from "@/component/DropdownMenu/DropdownMenu";
 
@@ -37,33 +38,35 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${InterFont.variable} ${OutfitFont.variable}`}>
         <QueryProvider>
-          <DropdownMenu>
-            <Toaster position="top-center" duration={5000} />
-            <NextTopLoader showSpinner={false} color="var(--color-primary)" />
-            <ToggleProvider>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  height: "100vh",
-                }}
-              >
-                <PanelNavbar />
+          <PreferenceProvider>
+            <DropdownMenu>
+              <Toaster position="top-center" duration={5000} />
+              <NextTopLoader showSpinner={false} color="var(--color-primary)" />
+              <ToggleProvider>
                 <div
                   style={{
-                    flex: 1,
                     display: "flex",
-                    flexDirection: "column",
-                    overflow: "hidden",
-                    minWidth: 0,
+                    flexDirection: "row",
+                    height: "100vh",
                   }}
                 >
-                  <MainHeader />
-                  {children}
+                  <PanelNavbar />
+                  <div
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      overflow: "hidden",
+                      minWidth: 0,
+                    }}
+                  >
+                    <MainHeader />
+                    {children}
+                  </div>
                 </div>
-              </div>
-            </ToggleProvider>
-          </DropdownMenu>
+              </ToggleProvider>
+            </DropdownMenu>
+          </PreferenceProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryProvider>
       </body>

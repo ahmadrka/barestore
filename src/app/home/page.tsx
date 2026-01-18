@@ -15,6 +15,8 @@ import { useRouter } from "next/navigation";
 import Icon from "@/component/Icon/Icon";
 import usePreferences from "@/hook/usePreferences";
 import { useSearchParams } from "next/navigation";
+import { jwtDecode } from "jwt-decode";
+import { getCookie } from "@/lib/helper/cookies";
 
 export default function SetupPage() {
   const router = useRouter();
@@ -30,6 +32,19 @@ export default function SetupPage() {
 
   const fetchData = async () => {
     try {
+      const token = await getCookie("accessToken");
+      if (token) {
+        try {
+          const decoded: any = jwtDecode(token);
+          console.log("Decoded tokens: ", decoded);
+          // Contoh akses data:
+          // console.log(decoded.sub); // Biasanya ID User
+          // console.log(decoded.role); // Role (Admin/User)
+          // console.log(decoded.exp); // Waktu kadaluarsa (Unix timestamp)
+        } catch (err) {
+          console.error("Token decode error:", err);
+        }
+      }
       const userData = await getUser();
       if (userData) setUserData(userData);
 
@@ -49,7 +64,10 @@ export default function SetupPage() {
 
   useEffect(() => {
     if (isLoaded && showSelection === false && storeSelection) {
-      router.replace(redirect || `/dashboard`);
+      const target = redirect || `/dashboard`;
+      if (target !== "/home") {
+        router.replace(target);
+      }
     }
   }, [isLoaded, showSelection, storeSelection, router]);
 
@@ -167,6 +185,13 @@ export default function SetupPage() {
               Create Store
             </Link>
           </div>
+          <Link
+            href="/auth"
+            className={button.primary}
+            style={{ width: "100%" }}
+          >
+            ADMIN DASHBOARD
+          </Link>
         </div>
         {stores?.length === 0
           ? null
