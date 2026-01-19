@@ -17,6 +17,8 @@ import usePreferences from "@/hook/usePreferences";
 import { useSearchParams } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { getCookie } from "@/lib/helper/cookies";
+import { Token } from "@/type/token";
+import useLocalStorage from "@/hook/useLocalStorage";
 
 export default function SetupPage() {
   const router = useRouter();
@@ -26,9 +28,20 @@ export default function SetupPage() {
   const [userData, setUserData] = useState<UserProfile | null>(null);
   const [stores, setStores] = useState<UserStore[] | null>(null);
   const { preferences, setPreference, isLoaded } = usePreferences();
+  const [token, setToken] = useState<Token>();
+  const [isAdmin, setIsAdmin, isAdminLoaded] = useLocalStorage<Token | null>(
+    "isAdmin",
+    null
+  );
 
   const storeSelection = preferences.storeSelection;
   const showSelection = preferences.showSelection;
+
+  const adminDashboard = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (token) setIsAdmin(token);
+    router.replace("/dashboard");
+  };
 
   const fetchData = async () => {
     try {
@@ -36,6 +49,7 @@ export default function SetupPage() {
       if (token) {
         try {
           const decoded: any = jwtDecode(token);
+          setToken(decoded);
           console.log("Decoded tokens: ", decoded);
           // Contoh akses data:
           // console.log(decoded.sub); // Biasanya ID User
@@ -58,6 +72,7 @@ export default function SetupPage() {
   };
 
   const handleStoreClick = (storeId: number) => {
+    setIsAdmin(null);
     setPreference("storeSelection", storeId);
     router.replace(redirect || `/dashboard`);
   };
@@ -185,13 +200,15 @@ export default function SetupPage() {
               Create Store
             </Link>
           </div>
-          <Link
-            href="/auth"
-            className={button.primary}
-            style={{ width: "100%" }}
-          >
-            ADMIN DASHBOARD
-          </Link>
+          {(token?.role === "ADMIN" || token?.role === "SUPERADMIN") && (
+            <button
+              onClick={(e) => adminDashboard(e)}
+              className={button.primary}
+              style={{ width: "100%" }}
+            >
+              ADMIN DASHBOARD
+            </button>
+          )}
         </div>
         {stores?.length === 0
           ? null

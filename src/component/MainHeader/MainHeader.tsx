@@ -9,6 +9,7 @@ import { getStores } from "@/lib/api/stores";
 import { UserStore } from "@/type/userStore";
 import { useEffect, useState } from "react";
 import { StoreProfile } from "@/type/store";
+import { Token } from "@/type/token";
 
 export default function MainHeader({
   title = "Dashboard",
@@ -18,11 +19,13 @@ export default function MainHeader({
   const router = useRouter();
   const [stores, setStores] = useState<StoreProfile>();
   const { preferences, setPreference, isLoaded } = usePreferences();
+  const [isAdmin, setIsAdmin] = useState<Token | null>(null);
 
   const storeSelection = preferences.storeSelection;
 
   const changeStore = () => {
     setPreference("storeSelection", null);
+    setIsAdmin(null);
   };
 
   const fetchData = async (id: number) => {

@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import Loading from "../loading";
 import { StoreInfo } from "@/type/store";
 import { getStoreInfo, getStores } from "@/lib/api/stores";
+import useLocalStorage from "@/hook/useLocalStorage";
+import { Token } from "@/type/token";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -23,6 +25,10 @@ export default function Dashboard() {
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
   const { preferences, setPreference, isLoaded } = usePreferences();
+  const [isAdmin, setIsAdmin, isAdminLoaded] = useLocalStorage<Token | null>(
+    "isAdmin",
+    null
+  );
 
   const storeSelection = preferences.storeSelection;
 
@@ -61,15 +67,19 @@ export default function Dashboard() {
 
   const updateStoreInfo = async () => {
     if (!storeSelection) return;
-    const data = await getStoreInfo(storeSelection);
-    if (data) setStoreInfo(data);
+    try {
+      const data = await getStoreInfo(storeSelection);
+      if (data) setStoreInfo(data);
+    } catch (err) {
+      console.error("Failed to fetch store info:", err);
+    }
   };
 
   useEffect(() => {
-    if (isLoaded && !storeSelection) {
+    if (isLoaded && isAdminLoaded && !storeSelection && !isAdmin) {
       router.replace("/home?redirect=/dashboard");
     }
-  }, [isLoaded, storeSelection, router]);
+  }, [isLoaded, isAdminLoaded, storeSelection, isAdmin, router]);
 
   const fetchData = async () => {
     const data = await getUser();
@@ -87,7 +97,8 @@ export default function Dashboard() {
     if (storeSelection) updateStoreInfo();
   }, [isLoaded, storeSelection]);
 
-  if (!isLoaded || (isLoaded && !storeSelection)) return <Loading />;
+  if (!isLoaded || !isAdminLoaded || (!storeSelection && !isAdmin))
+    return <Loading />;
 
   return (
     <main className={styles.dashboard}>

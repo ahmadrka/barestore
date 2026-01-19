@@ -56,3 +56,13 @@
   pointer-events: none;
   cursor: not-allowed;
 }
+
+.error {
+  background-color: var(--red-900);
+}
+.error:hover {
+  background-color: var(--red-500);
+}
+.error:active {
+  background-color: var(--red-100);
+}
