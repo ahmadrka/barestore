@@ -26,7 +26,7 @@ export default function ProductsPage({
 }) {
   const router = useRouter();
   const paramsData = use(params);
-  const id = paramsData.id?.[0];
+  const id = paramsData.id;
   const [storeInfo, setStoreInfo] = useState<StoreInfo>();
   const [product, setProduct] = useState<Product>();
   const { preferences, setPreference, isLoaded } = usePreferences();

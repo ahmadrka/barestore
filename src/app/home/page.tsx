@@ -15,6 +15,10 @@ import { useRouter } from "next/navigation";
 import Icon from "@/component/Icon/Icon";
 import usePreferences from "@/hook/usePreferences";
 import { useSearchParams } from "next/navigation";
+import { jwtDecode } from "jwt-decode";
+import { getCookie } from "@/lib/helper/cookies";
+import { Token } from "@/type/token";
+import useLocalStorage from "@/hook/useLocalStorage";
 
 export default function SetupPage() {
   const router = useRouter();
@@ -24,12 +28,37 @@ export default function SetupPage() {
   const [userData, setUserData] = useState<UserProfile | null>(null);
   const [stores, setStores] = useState<UserStore[] | null>(null);
   const { preferences, setPreference, isLoaded } = usePreferences();
+  const [token, setToken] = useState<Token>();
+  const [isAdmin, setIsAdmin, isAdminLoaded] = useLocalStorage<Token | null>(
+    "isAdmin",
+    null
+  );
 
   const storeSelection = preferences.storeSelection;
   const showSelection = preferences.showSelection;
 
+  const adminDashboard = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (token) setIsAdmin(token);
+    router.replace("/dashboard");
+  };
+
   const fetchData = async () => {
     try {
+      const token = await getCookie("accessToken");
+      if (token) {
+        try {
+          const decoded: any = jwtDecode(token);
+          setToken(decoded);
+          console.log("Decoded tokens: ", decoded);
+          // Contoh akses data:
+          // console.log(decoded.sub); // Biasanya ID User
+          // console.log(decoded.role); // Role (Admin/User)
+          // console.log(decoded.exp); // Waktu kadaluarsa (Unix timestamp)
+        } catch (err) {
+          console.error("Token decode error:", err);
+        }
+      }
       const userData = await getUser();
       if (userData) setUserData(userData);
 
@@ -43,13 +72,17 @@ export default function SetupPage() {
   };
 
   const handleStoreClick = (storeId: number) => {
+    setIsAdmin(null);
     setPreference("storeSelection", storeId);
     router.replace(redirect || `/dashboard`);
   };
 
   useEffect(() => {
     if (isLoaded && showSelection === false && storeSelection) {
-      router.replace(redirect || `/dashboard`);
+      const target = redirect || `/dashboard`;
+      if (target !== "/home") {
+        router.replace(target);
+      }
     }
   }, [isLoaded, showSelection, storeSelection, router]);
 
@@ -167,6 +200,15 @@ export default function SetupPage() {
               Create Store
             </Link>
           </div>
+          {(token?.role === "ADMIN" || token?.role === "SUPERADMIN") && (
+            <button
+              onClick={(e) => adminDashboard(e)}
+              className={button.primary}
+              style={{ width: "100%" }}
+            >
+              ADMIN DASHBOARD
+            </button>
+          )}
         </div>
         {stores?.length === 0
           ? null

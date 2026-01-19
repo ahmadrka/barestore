@@ -22,10 +22,14 @@ export default function useLocalStorage<T>(key: string, initial: T) {
   }, [key]);
 
   const setToggle = useCallback(
-    (v: T) => {
+    (v: T | ((prev: T) => T)) => {
       if (typeof window !== "undefined") {
-        localStorage.setItem(key, JSON.stringify(v));
-        setValue(v);
+        setValue((prev) => {
+          const newValue =
+            typeof v === "function" ? (v as (prev: T) => T)(prev) : v;
+          localStorage.setItem(key, JSON.stringify(newValue));
+          return newValue;
+        });
       }
     },
     [key]

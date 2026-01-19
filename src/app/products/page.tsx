@@ -10,11 +10,17 @@ import Loading from "@/app/loading";
 import { getStoreInfo } from "@/lib/api/stores";
 import { StoreInfo } from "@/type/store";
 import Link from "next/link";
+import useLocalStorage from "@/hook/useLocalStorage";
+import { Token } from "@/type/token";
 
 export default function ProductsIndexPage() {
   const router = useRouter();
   const [storeInfo, setStoreInfo] = useState<StoreInfo>();
   const { preferences, isLoaded } = usePreferences();
+  const [isAdmin, setIsAdmin, isAdminLoaded] = useLocalStorage<Token | null>(
+    "isAdmin",
+    null
+  );
   const storeSelection = preferences.storeSelection;
 
   const updateStoreInfo = async () => {
@@ -24,13 +30,14 @@ export default function ProductsIndexPage() {
   };
 
   useEffect(() => {
-    if (isLoaded && !storeSelection) {
+    if (isLoaded && isAdminLoaded && !storeSelection && !isAdmin) {
       router.replace("/home?redirect=/products");
     }
     if (storeSelection) updateStoreInfo();
-  }, [isLoaded, storeSelection, router]);
+  }, [isLoaded, isAdminLoaded, storeSelection, isAdmin, router]);
 
-  if (!isLoaded || (isLoaded && !storeSelection)) return <Loading />;
+  if (!isLoaded || !isAdminLoaded || (!storeSelection && !isAdmin))
+    return <Loading />;
 
   return (
     <InfoMenu>

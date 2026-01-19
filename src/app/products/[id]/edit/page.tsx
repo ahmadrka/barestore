@@ -12,6 +12,7 @@ import { DropdownMenu } from "@/component/DropdownMenu/DropdownMenu";
 import { useRouter } from "next/navigation";
 import { createProduct, editProduct, getProducts } from "@/lib/api/products";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function EditProduct({
   params,
@@ -39,11 +40,13 @@ export default function EditProduct({
   const { preferences, setPreference, isLoaded } = usePreferences();
   const storeId = preferences.storeSelection;
 
+  const queryClient = useQueryClient();
   const items = [
     { label: "Product Edit", href: `/products/${id}/edit` },
     { label: "Product Images", href: `/products/${id}/images` },
     { label: "Product Variants", href: `/products/${id}/variants` },
     { label: "Product Reviews", href: `/products/${id}/reviews` },
+    { label: "Product Management", href: `/products/${id}/management` },
     { label: "Back to Products", href: "/products" },
   ];
 
@@ -139,6 +142,7 @@ export default function EditProduct({
         price: Number(productData.price),
       };
       await editProduct(storeId, id, payload as any);
+      queryClient.invalidateQueries({ queryKey: ["products", storeId] });
       toast.success("Product edited successfully!");
       // router.push("/products");
     } catch (error) {

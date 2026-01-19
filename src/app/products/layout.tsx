@@ -18,6 +18,8 @@ import items from "@/component/Styles/ItemList.module.css";
 import Image from "next/image";
 import PanelMenu from "@/component/PanelMenu/PanelMenu";
 import { useQuery } from "@tanstack/react-query";
+import useLocalStorage from "@/hook/useLocalStorage";
+import { Token } from "@/type/token";
 
 export default function ProductsLayout({
   children,
@@ -28,12 +30,16 @@ export default function ProductsLayout({
   const params = useParams();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const id = params.id?.[0];
-  const excludePaths = ["/create", "/images", "/edit"];
+  const id = params.id as string;
+  const excludePaths = ["/create", "/images", "/edit", "/management"];
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product[]>([]);
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const { preferences, setPreference, isLoaded } = usePreferences();
+  const [isAdmin, setIsAdmin, isAdminLoaded] = useLocalStorage<Token | null>(
+    "isAdmin",
+    null
+  );
 
   const panelMenu = [
     {
@@ -193,10 +199,10 @@ export default function ProductsLayout({
   }, [products, selectedProduct]);
 
   useEffect(() => {
-    if (isLoaded && !storeSelection) {
+    if (isLoaded && isAdminLoaded && !storeSelection && !isAdmin) {
       router.replace("/home?redirect=/products");
     }
-  }, [isLoaded, storeSelection, router]);
+  }, [isLoaded, isAdminLoaded, storeSelection, isAdmin, router]);
 
   if (!excludePaths.some((path) => pathname.includes(path)))
     return (

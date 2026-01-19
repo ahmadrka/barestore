@@ -43,3 +43,9 @@ export async function editProduct(
   const response = await axiosInstance.patch(url, productData);
   return response.data;
 }
+
+export async function deleteProduct(storeId: string, productId: string) {
+  const url = `/stores/${storeId}/products/${productId}`;
+  const response = await axiosInstance.delete(url);
+  return response.data;
+}

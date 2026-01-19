@@ -131,3 +131,7 @@ a:hover .icon {
 .dropdownMenuContent {
   margin-bottom: var(--space-1);
 }
+
+.isAdmin {
+  background-color: var(--orange-100) !important;
+}

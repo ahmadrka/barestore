@@ -24,7 +24,7 @@ export default function Home() {
           <Link href="/auth/login" className={styles.secondaryButton}>
             Sign In
           </Link>
-          <Link href="/auth/register" className={styles.ctaButton}>
+          <Link href="/auth/signup" className={styles.ctaButton}>
             Get Started
           </Link>
         </nav>
@@ -33,11 +33,9 @@ export default function Home() {
       <main>
         <section className={styles.hero}>
           <div className={styles.heroContent}>
-            <span className={styles.heroBadge}>
-              New: AI-Powered Inventory Predictions
-            </span>
+            <span className={styles.heroBadge}>Alpha Version</span>
             <h1 className={styles.heroTitle}>
-              Revolutionizing Retail Management System.
+              Streamline Your Sales, Scale Your Business.
             </h1>
             <p className={styles.heroSubtitle}>
               Streamline your operations, manage stock across locations, and
@@ -46,20 +44,20 @@ export default function Home() {
             </p>
             <div className={styles.heroActions}>
               <Link href="/auth/register" className={styles.ctaButton}>
-                Start Your 14-Day Free Trial
+                Start For Free
               </Link>
               <Link href="#demo" className={styles.secondaryButton}>
-                Book a Live Demo
+                Contact Us
               </Link>
             </div>
           </div>
           <div className={styles.heroImageContainer}>
             <Image
-              src="/landing-hero.png"
+              src="/images/landing-hero.png"
               alt="BareHouse POS Interface"
-              width={1200}
-              height={800}
-              style={{ width: "100%", height: "auto" }}
+              width={1248}
+              height={832}
+              style={{ width: "100%", height: "auto", objectFit: "cover" }}
               priority
             />
           </div>

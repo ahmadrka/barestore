@@ -12,6 +12,8 @@ import { DropdownMenu } from "@/component/DropdownMenu/DropdownMenu";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { handleLogout } from "@/lib/api/auth";
+import useLocalStorage from "@/hook/useLocalStorage";
+import { Token } from "@/type/token";
 
 export default function PanelNavbar() {
   const router = useRouter();
@@ -26,8 +28,13 @@ export default function PanelNavbar() {
     "/transactions",
   ];
   const homeRoutes = ["/home"];
+  const [isAdmin, setIsAdmin, isAdminLoaded] = useLocalStorage<Token | null>(
+    "isAdmin",
+    null
+  );
 
   const handleLogoutButton = async () => {
+    setIsAdmin(null);
     await handleLogout();
     router.push("/auth/login");
   };
@@ -49,11 +56,17 @@ export default function PanelNavbar() {
   if (homeRoutes.some((path) => pathname.startsWith(path)))
     return (
       <nav
-        className={
+        className={`${
           context.panelNavbar
             ? `${styles.parent}`
             : `${styles.parent} ${styles.parentActive}`
-        }
+        } ${
+          (isAdmin as any) === true ||
+          isAdmin?.role === "ADMIN" ||
+          isAdmin?.role === "SUPERADMIN"
+            ? styles.isAdmin
+            : ""
+        }`}
       >
         <ul className={styles.list}>
           <li className={styles.logo}>
@@ -123,11 +136,17 @@ export default function PanelNavbar() {
   if (storeRoutes.some((path) => pathname.startsWith(path)))
     return (
       <nav
-        className={
+        className={`${
           context.panelNavbar
             ? `${styles.parent}`
             : `${styles.parent} ${styles.parentActive}`
-        }
+        } ${
+          (isAdmin as any) === true ||
+          isAdmin?.role === "ADMIN" ||
+          isAdmin?.role === "SUPERADMIN"
+            ? styles.isAdmin
+            : ""
+        }`}
       >
         <ul className={styles.list}>
           <li className={styles.logo}>
