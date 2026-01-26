@@ -1,10 +1,12 @@
 <div align="center">
+  <img src="https://raw.githubusercontent.com/ahmadrka/barestore/dev/public/demo/logo.png" width="120" alt="Logo" />
+
   <h1>BareStore POS</h1>
   
   <p>
     Welcome to BareStore, a Retail Management System app that use POS (Point Of Sale) system, built by 
     <a href="https://ahmadrka.com">Ahmadrka</a>, 
-    with Nest.js framework, PostgreSQL, and Prisma.
+    with Next.js framework.
   </p>
 
   <a href="https://github.com/ahmadrka/barestore">
@@ -22,11 +24,36 @@
 
 <br><br>
 
-<code>looking for backend project? <a href="https://github.com/ahmadrka/barebase">click here</a></code>
-
+  <h3><code>looking for backend project? <a href="https://github.com/ahmadrka/barebase">click here</a></code></h3>
 </div>
 
-## | See Project Docs On [Postman](https://documenter.getpostman.com/view/50216756/2sBXVigpTH) |
+  <br>
+
+## Demo Gallery
+
+<details>
+  <summary><b>💻 Desktop Screenshots</b> <i>(click to view)</i></summary>
+  <div  align="center">
+    <h4>Landing Page</h4>
+    <img src="https://raw.githubusercontent.com/ahmadrka/barestore/dev/public/demo/landing-page.png" width="90%" alt="Landing Page" />
+    <br>
+    <h4>Authentication</h4>
+    <img src="https://raw.githubusercontent.com/ahmadrka/barestore/dev/public/demo/auth-page.png" width="90%" alt="Authentication" />
+    <br>
+    <h4>Dashboard</h4>
+    <img src="https://raw.githubusercontent.com/ahmadrka/barestore/dev/public/demo/dashboard.png" width="90%" alt="Dashboard" />
+    <br>
+    <h4>Product Management</h4>
+    <img src="https://raw.githubusercontent.com/ahmadrka/barestore/dev/public/demo/products-management.png" width="90%" alt="Products Management" />
+  </div>
+</details>
+
+<details>
+  <summary><b>📱 Mobile Screenshots</b> <i>(click to view)</i></summary>
+  <div  align="center">
+    <h4><i>coming soon</i></h4>
+  </div>
+</details>
 
 ## Tech Stack
 
@@ -47,26 +74,72 @@
 
 ## Pages
 
-- Auth
-- ...
+- **Landing Page:** initial view of this website.
+  - Login, signup or contact button.
+  - Image screenshot for sevice demo.
+  - Comprehensive service description and information.
+- **Authentication:** login or signup page.
+  - Login with email and password.
+  - Login with oauth (like Google, Microsoft, Facebook).
+  - Signup page with verification and set password page.
+- **Home:** the page where it all started.
+  - Store list for joined store.
+  - Join or Create store page.
+  - User profile management (profile, logout, etc).
+- **Dashboard:** dashboard for selected store.
+  - Statistic data (total member & products, working hour, etc).
+  - Store information.
+- **Products Management:** products list from selected store.
+  - Comprehensive list of product.
+  - Search bar and sort by/filter button.
+  - Checkbox for select many products.
+  - Product information and edit page.
+  - Create product page for new products.
+- **Staff Management:** manage staff from selected store.
+  - Comprehensive list of staffs.
+  - Search bar and sort by/filter button.
+  - Checkbox for select many staffs.
+  - Staff information and update page.
+  - Staff invitation page for invitation or invite token.
+- **Statistic:** data analytic and statistic for selected store
+- **Transaction:** cashier tansaction for selected store
 
 ## Features
 
-...
+### Minimalism and Modern Design
+
+### Authentication & Authorization
+
+- **Login with Email and Password:** allows users to login using email and password.
+- **Hashed Passwords:** passwords are stored in hashed form in the database.
+- **Email Verification:** automatically sends emails for account creation or password reset.
+- **OAuth 2.0 Support:** user can login or signup using their Google, Microsoft or Facebook account.
+- **Multi-Tenancy Store:** user can only access and manage if they are members of the store.
+- **User and Store Role:** users can only access a feature if they have permission to do so.
+
+### POS (Point Of Sale)
+
+- **Store:**
+- **Products:**
+- **Staffs:**
+-
+
+### Theme and Languages support _(coming soon)_
 
 ## Deployment
 
 ### Deployment Demo
 
-**You can see live demo in here**
-**👉 [https://api.revobank.ahmadrka.com](https://api.revobank.ahmadrka.com) 👈**
-Hosted on [Railway](https://railway.com)
-Database on [Neon](https://neon.com/)
+<div align="center">
+<h4>You can see live demo in here</h4>
+<h4>👉 <a href="https://barestore.ahmadrka.com">https://barestore.ahmadrka.com</a> 👈</h4>
+Hosted on <a href="https://netlify.com">Netlify</a>
+</div>
 
 ### Deployment Setup
 
 1. Make sure you have installed [**Node.js**](https://nodejs.org/) (v18+ recommended).
-2. Clone or download [this repository](https://github.com/Revou-FSSE-Jun25/milestone-4-Ahmad-Arkan).
+2. Clone or download [this repository](https://github.com/ahmadrka/barestore).
 
    ```bash
    git clone https://github.com/ahmadrka/barestore.git
@@ -100,4 +173,4 @@ Database on [Neon](https://neon.com/)
    npm run start
    ```
 
-   Congrats, now you running this backend app.
+   Congrats, now you running this BareStore POS frontend side app.
