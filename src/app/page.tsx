@@ -9,7 +9,7 @@ export default function Home() {
       <header className={styles.navbar}>
         <div className={styles.logoContainer}>
           <Icon name="logo" width={32} height={32} />
-          <span>BareHouse</span>
+          <span>BareStore</span>
         </div>
         <nav className={styles.navLinks}>
           <Link href="#features" className={styles.navLink}>
