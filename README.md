@@ -1,46 +1,21 @@
-<div  align="center">
+<div align="center">
 
-<img  src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/logo.png"  width="120"  alt="Logo"  />
+<img src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/logo.png" width="120" alt="Logo" />
 
 <h1>BareStore POS</h1>
 
 <p>
-
-Welcome to BareStore, a Retail Management System app that use POS (Point Of Sale) system, built by
-
-<a  href="https://ahmadrka.com">Ahmadrka</a>,
-
-with Next.js framework.
-
+Welcome to BareStore, a Retail Management System app that use POS (Point Of Sale) system, built by <a href="https://ahmadrka.com">Ahmadrka</a>, with Next.js framework.
 </p>
 
-<a  href="https://github.com/ahmadrka/barestore">
-
-<img  src="https://img.shields.io/badge/BareStore-Frontend_Repo-blue?style=for-the-badge&logo=github"  />
-
-</a>
-
-<a  href="https://github.com/ahmadrka/barebase">
-
-<img  src="https://img.shields.io/badge/BareBase-Backend_Repo-red?style=for-the-badge&logo=github"  />
-
-</a>
-
-<a  href="https://github.com/ahmadrka/barebase/releases">
-
-<img  src="https://img.shields.io/github/downloads/ahmadrka/barebase/total?style=for-the-badge&logo=github&color=brightgreen"  />
-
-</a>
-
-<a  href="https://github.com/ahmadrka/barebase/stargazers">
-
-<img  src="https://img.shields.io/github/stars/ahmadrka/barebase?style=for-the-badge&logo=reverbnation&color=yellow"  />
-
-</a>
+<a href="https://github.com/ahmadrka/barestore"><img src="https://img.shields.io/badge/BareStore-Frontend_Repo-blue?style=flat&logo=github"></a>
+<a href="https://github.com/ahmadrka/barebase"><img src="https://img.shields.io/badge/BareBase-Backend_Repo-red?style=flat&logo=github"></a>
+<a href="https://github.com/ahmadrka/barebase/releases"><img src="https://img.shields.io/github/downloads/ahmadrka/barebase/total?style=flat&logo=github&color=brightgreen"></a>
+<a href="https://github.com/ahmadrka/barebase/stargazers"><img src="https://img.shields.io/github/stars/ahmadrka/barebase?style=flat&logo=reverbnation&color=yellow"></a>
 
 <br><br>
 
-<h3><code>looking for backend project? <a  href="https://github.com/ahmadrka/barebase">click here</a></code></h3>
+<h3><code>looking for backend project? <a href="https://github.com/ahmadrka/barebase">click here</a></code></h3>
 
 </div>
 
@@ -50,31 +25,31 @@ with Next.js framework.
 
 <details>
 
-<summary><b>💻 Desktop Screenshots</b>  <i>(click to view)</i></summary>
+<summary><b>💻 Desktop Screenshots</b> <i>(click to view)</i></summary>
 
-<div  align="center">
+<div align="center">
 
 <h4>Landing Page</h4>
 
-<img  src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/landing-page.png"  width="90%"  alt="Landing Page"  />
+<img src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/landing-page.png" width="90%" alt="Landing Page" />
 
 <br>
 
 <h4>Authentication</h4>
 
-<img  src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/auth-page.png"  width="90%"  alt="Authentication"  />
+<img src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/auth-page.png" width="90%" alt="Authentication" />
 
 <br>
 
 <h4>Dashboard</h4>
 
-<img  src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/dashboard.png"  width="90%"  alt="Dashboard"  />
+<img src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/dashboard.png" width="90%" alt="Dashboard" />
 
 <br>
 
 <h4>Product Management</h4>
 
-<img  src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/products-management.png"  width="90%"  alt="Products Management"  />
+<img src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/products-management.png" width="90%" alt="Products Management" />
 
 </div>
 
@@ -82,9 +57,9 @@ with Next.js framework.
 
 <details>
 
-<summary><b>📱 Mobile Screenshots</b>  <i>(click to view)</i></summary>
+<summary><b>📱 Mobile Screenshots</b> <i>(click to view)</i></summary>
 
-<div  align="center">
+<div align="center">
 
 <h4><i>coming soon</i></h4>
 
@@ -189,13 +164,13 @@ with Next.js framework.
 
 ### Deployment Demo
 
-<div  align="center">
+<div align="center">
 
 <h4>You can see live demo in here</h4>
 
-<h4>👉 <a  href="https://barestore.ahmadrka.com">https://barestore.ahmadrka.com</a> 👈</h4>
+<h4>👉 <a href="https://barestore.ahmadrka.com">https://barestore.ahmadrka.com</a> 👈</h4>
 
-Hosted on <a  href="https://netlify.com">Netlify</a>
+Hosted on <a href="https://netlify.com">Netlify</a>
 
 </div>
 
