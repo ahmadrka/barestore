@@ -10,8 +10,8 @@ Welcome to BareStore, a Retail Management System app that use POS (Point Of Sale
 
 <a href="https://github.com/ahmadrka/barestore"><img src="https://img.shields.io/badge/BareStore-Frontend_Repo-blue?style=flat&logo=github"></a>
 <a href="https://github.com/ahmadrka/barebase"><img src="https://img.shields.io/badge/BareBase-Backend_Repo-red?style=flat&logo=github"></a>
-<a href="https://github.com/ahmadrka/barebase/releases"><img src="https://img.shields.io/github/downloads/ahmadrka/barebase/total?style=flat&logo=github&color=brightgreen"></a>
-<a href="https://github.com/ahmadrka/barebase/stargazers"><img src="https://img.shields.io/github/stars/ahmadrka/barebase?style=flat&logo=reverbnation&color=yellow"></a>
+<a href="https://github.com/ahmadrka/barestore/releases"><img src="https://img.shields.io/github/downloads/ahmadrka/barebase/total?style=flat&logo=github&color=brightgreen"></a>
+<a href="https://github.com/ahmadrka/barestore/stargazers"><img src="https://img.shields.io/github/stars/ahmadrka/barebase?style=flat&logo=reverbnation&color=yellow"></a>
 
 <br><br>
 
