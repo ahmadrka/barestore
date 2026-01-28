@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/logo.png" width="120" alt="Logo" />
+<a href="https://barestore.ahmadrka.com" target="_blank"><img src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/logo.png" width="120" alt="Logo" /></a>
 
 <h1>BareStore POS</h1>
 
@@ -8,20 +8,20 @@
 Welcome to BareStore, a Retail Management System app that use POS (Point Of Sale) system, built by <a href="https://ahmadrka.com">Ahmadrka</a>, with Next.js framework.
 </p>
 
-<a href="https://github.com/ahmadrka/barestore"><img src="https://img.shields.io/badge/BareStore-Frontend_Repo-blue?style=flat&logo=github"></a>
-<a href="https://github.com/ahmadrka/barebase"><img src="https://img.shields.io/badge/BareBase-Backend_Repo-red?style=flat&logo=github"></a>
-<a href="https://github.com/ahmadrka/barebase/releases"><img src="https://img.shields.io/github/downloads/ahmadrka/barebase/total?style=flat&logo=github&color=brightgreen"></a>
-<a href="https://github.com/ahmadrka/barebase/stargazers"><img src="https://img.shields.io/github/stars/ahmadrka/barebase?style=flat&logo=reverbnation&color=yellow"></a>
+<a href="https://github.com/ahmadrka/barestore" target="_blank"><img src="https://img.shields.io/badge/BareStore-Frontend_Repo-blue?style=flat&logo=github"></a>
+<a href="https://github.com/ahmadrka/barebase" target="_blank"><img src="https://img.shields.io/badge/BareBase-Backend_Repo-red?style=flat&logo=github"></a>
+<a href="https://github.com/ahmadrka/barestore/releases" target="_blank"><img src="https://img.shields.io/github/downloads/ahmadrka/barestore/total?style=flat&logo=github&color=brightgreen"></a>
+<a href="https://github.com/ahmadrka/barestore/stargazers" target="_blank"><img src="https://img.shields.io/github/stars/ahmadrka/barestore?style=flat&logo=reverbnation&color=yellow"></a>
 
 <br><br>
 
-<h3><code>looking for backend project? <a href="https://github.com/ahmadrka/barebase">click here</a></code></h3>
+<h3><code>looking for backend project? <a href="https://github.com/ahmadrka/barebase" target="_blank">click here</a></code></h3>
 
 </div>
 
 <br>
 
-## Demo Gallery
+## 📸 Demo Gallery
 
 <details>
 
@@ -38,6 +38,12 @@ Welcome to BareStore, a Retail Management System app that use POS (Point Of Sale
 <h4>Authentication</h4>
 
 <img src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/auth-page.png" width="90%" alt="Authentication" />
+
+<br>
+
+<h4>Home</h4>
+
+<img src="https://raw.githubusercontent.com/ahmadrka/barestore/main/public/demo/home-page.png" width="90%" alt="Home" />
 
 <br>
 
@@ -67,31 +73,24 @@ Welcome to BareStore, a Retail Management System app that use POS (Point Of Sale
 
 </details>
 
-## Tech Stack
+## ⚙️ Tech Stack
 
 ### Core
 
 - [Typescript](https://www.typescriptlang.org/)
-
 - [Next.js 16](http://nextjs.org/)
-
 - [Tanstack Query v5](https://tanstack.com/query/latest)
 
 ### Dependencies
 
 - [Axios](https://axios-http.com/)
-
 - [Sonner](https://www.npmjs.com/package/sonner)
-
 - [Zod](https://zod.dev/)
-
 - [nextjs-toploader](https://www.npmjs.com/package/nextjs-toploader)
-
 - [jwt-decode](https://www.npmjs.com/package/jwt-decode)
-
 - [@ducanh2912/next-pwa](https://www.npmjs.com/package/@ducanh2912/next-pwa)
 
-## Pages
+## 📄 Pages
 
 - **Landing Page:** initial view of this website.
   - Login, signup or contact button.
@@ -130,47 +129,57 @@ Welcome to BareStore, a Retail Management System app that use POS (Point Of Sale
 
 - **Transaction:** cashier tansaction for selected store
 
-## Features
+## 📖 Features
 
-### Minimalism and Modern Design
+### Appearance
 
-### Authentication & Authorization
+- **Web Design:** user-friendly with modern and minimalism web design.
+- **Accessibility:** use standard web accessibility (WCAG 2.1 AA).
+- **Modern Color Scheme:** use OKLCH color space with css color variables.
+- **Responsive** _(on progress)_ <!-- allows users to switch between dark and light mode. -->
+- **Dark/Light Mode** _(on progress)_ <!-- allows users to switch between dark and light mode. -->
+- **System Theme** _(on progress)_ <!-- automatically switches between dark and light mode based on system theme. -->
 
-- **Login with Email and Password:** allows users to login using email and password.
+### Security
 
-- **Hashed Passwords:** passwords are stored in hashed form in the database.
+- **Cookie Storage:** use cookie for token and session management.
+- **Authentication:** allows users to login using email and password, or oauth (google, microsoft, facebook).
+- **User Registration:** allows users to register using username, email and password with email verification.
+- **Role-Based Access Control:** users can only access a feature if they have permission to do so.
 
-- **Email Verification:** automatically sends emails for account creation or password reset.
+### Internationalization
 
-- **OAuth 2.0 Support:** user can login or signup using their Google, Microsoft or Facebook account.
+- **Multi-Language Support** _(on progress)_ <!-- allows users to switch between different languages. -->
+- **Multi-Currency Support** _(on progress)_ <!-- allows users to switch between different currencies. -->
 
-- **Multi-Tenancy Store:** user can only access and manage if they are members of the store.
+### Performance
 
-- **User and Store Role:** users can only access a feature if they have permission to do so.
+- **Lazy Loading:** prioritize loading pages with lazy loading.
+- **Image Optimization:** automatically resize and optimize images for faster loading.
+- **Query Caching:** use query caching for faster data fetching.
 
-### POS (Point Of Sale)
+### Admin
 
-- **Store:**
+- **Admin Panel:** allows users with admin role to moderate and manage users or stores.
 
-- **Products:**
+### Others
 
-- **Staffs:**
+- **404 Not Found:** custom 404 not found page.
+- **PWA:** allows users to install the app on their device.
+- **Toaster Notification:** toast notification for users.
+- **Form Validation:** automatically validate form inputs.
+- **File Upload:** _(on progress)_ <!-- allows users to upload files. -->
 
--
-
-### Theme and Languages support _(coming soon)_
-
-## Deployment
+## 📦 Deployment
 
 ### Deployment Demo
 
 <div align="center">
-
 <h4>You can see live demo in here</h4>
 
-<h4>👉 <a href="https://barestore.ahmadrka.com">https://barestore.ahmadrka.com</a> 👈</h4>
+<h4>👉 <a href="https://barestore.ahmadrka.com" target="_blank">https://barestore.ahmadrka.com</a> 👈</h4>
 
-Hosted on <a href="https://netlify.com">Netlify</a>
+Hosted on <a href="https://netlify.com" target="_blank">Netlify</a>
 
 </div>
 
@@ -196,7 +205,7 @@ npm install
 
 ```
 
-4. Copy environment example file for reference
+4. Set environment variables, or copy environment example file for reference.
 
 ```bash
 
@@ -208,20 +217,67 @@ cp .env.example .env
 
 ```bash
 
+# Run command
 npm run dev
 
 ```
 
-then, server will running on [http://localhost:3000](http://localhost:3000)
+then, server will running on [http://localhost:3000](http://localhost:3000) by default.
 
 6. Or, you can also run server with production mode.
 
 ```bash
 
+# Build command
 npm run build
 
+# Run Command
 npm run start
 
 ```
 
 Congrats, now you running this BareStore POS frontend side app.
+
+### Common Issues
+
+<details>
+
+<summary><b>Unable to start the project.</b></summary>
+
+<p>Node.js is not installed or not running, or you have not installed all dependencies modules.</p>
+
+<p><b>Solution: </b>make sure you have installed <a href="https://nodejs.org/">Node.js</a> (v18+ recommended), and run <code>npm install</code> to download all dependencies modules.</p>
+
+</details>
+<details>
+<summary><b>Project has started but <code>Can't reach this page</code>.</b></summary>
+
+<p>You opened the incorrect port or maybe there is another project running on the same port.</p>
+
+<p><b>Solution: </b>check project port in console when you run the project, or set port in <code>.env</code> file. Make sure you open the same port in your browser.</p>
+
+</details>
+<details>
+<summary><b>Backend Error or Axios Network Error.</b></summary>
+
+<p>Backend server is not running or not accessible.</p>
+
+<p><b>Solution: </b>make sure you have started the backend server properly, and set the correct backend server url in <code>.env</code> file.</p>
+
+</details>
+<details>
+<summary><b>Application or Browser Error.</b></summary>
+
+<p>Browser cookies conflict or extension prevent the page to open.</p>
+
+<p><b>Solution: </b>check console for error message, or try to use incognito mode or different browser.</p>
+
+</details>
+<details>
+<summary><b>Blocked by CORS.</b></summary>
+
+<p>The backend server running on different origin or different domain.</p>
+
+<p><b>Solution: </b>configure the backend server to allow requests from the frontend url. alternatively, you can use a browser extension to disable CORS (e.g. <a href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf">Allow CORS: Access-Control-Allow-Origin</a> for Chrome).</p>
+
+</details>
