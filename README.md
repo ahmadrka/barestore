@@ -210,6 +210,7 @@ cp .env.example .env
 
 ```bash
 
+# Run command
 npm run dev
 
 ```
@@ -220,8 +221,10 @@ then, server will running on [http://localhost:3000](http://localhost:3000) by d
 
 ```bash
 
+# Build command
 npm run build
 
+# Run Command
 npm run start
 
 ```
