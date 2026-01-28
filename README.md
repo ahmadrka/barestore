@@ -243,7 +243,7 @@ Congrats, now you running this BareStore POS frontend side app.
 
 </details>
 <details>
-<summary><b>Project has started but "can't reach this page".</b></summary>
+<summary><b>Project has started but <code>Can't reach this page</code>.</b></summary>
 
 <p>You opened the incorrect port or maybe there is another project running on the same port.</p>
 
