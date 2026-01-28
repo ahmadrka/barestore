@@ -96,30 +96,37 @@ Welcome to BareStore, a Retail Management System app that use POS (Point Of Sale
   - Login, signup or contact button.
   - Image screenshot for sevice demo.
   - Comprehensive service description and information.
+
 - **Authentication:** login or signup page.
   - Login with email and password.
   - Login with oauth (like Google, Microsoft, Facebook).
   - Signup page with verification and set password page.
+
 - **Home:** the page where it all started.
   - Store list for joined store.
   - Join or Create store page.
   - User profile management (profile, logout, etc).
+
 - **Dashboard:** dashboard for selected store.
   - Statistic data (total member & products, working hour, etc).
   - Store information.
+
 - **Products Management:** products list from selected store.
   - Comprehensive list of product.
   - Search bar and sort by/filter button.
   - Checkbox for select many products.
   - Product information and edit page.
   - Create product page for new products.
+
 - **Staff Management:** manage staff from selected store.
   - Comprehensive list of staffs.
   - Search bar and sort by/filter button.
   - Checkbox for select many staffs.
   - Staff information and update page.
   - Staff invitation page for invitation or invite token.
+
 - **Statistic:** data analytic and statistic for selected store
+
 - **Transaction:** cashier tansaction for selected store
 
 ## 📖 Features
